@@ -14,7 +14,7 @@ Here your bricks and separators come to life. Add your bricks, chose a separator
 ![alt tag](https://github.com/xxtesaxx/Tube-Bricks/blob/master/Screenshots/GeneratorTab.png)
 
 Here's how the finished text for the sample above looks:
-`Have fun watching my new video. :)
+```Have fun watching my new video. :)
 ——————
 Music used in this Video:
 -Some Artist - Some Song (youtube.com/someartist)
@@ -23,4 +23,4 @@ Music used in this Video:
 -https://twitter.com/JanLeMann
 
 
-Thank you for watching. Please rate and comment.`
+Thank you for watching. Please rate and comment.```
