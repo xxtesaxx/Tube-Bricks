@@ -28,10 +28,9 @@ Thank you for watching. Please rate and comment.
 ```
 
 ## Future Improvements
-This App is a first draft of what I find useful for myself, developed quick and dirty in a couple of ours. It's also my first Mac App as well as my first App written in swift. Therefore it might contain some bugs and doesn't follow best practices. I gave my best since I use the App everyday to generate descriptions of my daily video diary. Nevertheless I can imagine some improvements and additional features. Heres a short list of what I might or might not implement in the near future. Feel free to implement it yourself and send me a pull request:
-* Adding keyboard shortcut support (create and save bricks, separators, switch tabs, add/remove/move bricks in the generator and so on)
+This App is a first draft of what I find useful for myself, developed quick and dirty in a couple of hours. It's also my first Mac App as well as my first App written in swift. Therefore it might contain some bugs and doesn't follow best practices. I gave my best since I use the App everyday to generate descriptions of my daily video diary. Nevertheless I can imagine some improvements and additional features. Heres a short list of what I might or might not implement in the near future. Feel free to implement it yourself and send me a pull request:
 * Drag and Drop bricks in the generator (to add/remove/reorder them)
-* Add configurations so you can save and load a configuration of bricks/header/footer in the generator
+* Make everything look more beautiful
 
 ## Additional Thanks
 Additional thanks goes to the developers of Realm (http://www.realm.io). Realm is used as the underlaying database to store and retrieve bricks and separators. It has a very small footprint and it's even easier to use than Apples Core Data.
