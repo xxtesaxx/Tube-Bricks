@@ -10,9 +10,11 @@ import Cocoa
 import RealmSwift
 
 class Generator: Object {
+    dynamic var title: String = ""
     dynamic var headerText: String = ""
     dynamic var footerText: String = ""
     dynamic var headerSeparator: Separator?
     dynamic var footerSeparator: Separator?
-    var bricks = List<Brick>()
+    dynamic var isDefault: Bool = false
+    let generatorBricks = List<GeneratorBrick>()
 }

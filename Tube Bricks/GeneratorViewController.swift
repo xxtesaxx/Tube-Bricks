@@ -17,23 +17,20 @@ class GeneratorViewController: NSViewController {
     @IBOutlet weak var bricksDestinationTableView: NSTableView!
     @IBOutlet var headerTextView: NSTextView!
     @IBOutlet var footerTextView: NSTextView!
+    @IBOutlet weak var addGeneratorButton: NSButton!
+    @IBOutlet weak var deleteGeneratorButton: NSButton!
+    @IBOutlet weak var generatorTableView: NSTableView!
     
-    var allSourceBricks: Results<Brick> = try! Realm().objects(Brick).filter("inGenerator = false").sorted("title")
-    var sourceBricks: Results<Brick> = try! Realm().objects(Brick).filter("inGenerator = false").sorted("title")
-    var destinationBricks: Results<Brick> = try! Realm().objects(Brick).filter("inGenerator = true").sorted("positionInGenerator")
-
+    @IBOutlet weak var addButton: NSButton!
+    @IBOutlet weak var removeButton: NSButton!
+    @IBOutlet weak var moveUpButton: NSButton!
+    @IBOutlet weak var moveDownButton: NSButton!
+    
+    
     var separators: Results<Separator> = try! Realm().objects(Separator).sorted("title")
-
-    let generator: Generator = {
-        let realm = try! Realm()
-        let obj = realm.objects(Generator).first
-        if obj != nil {
-            return obj!
-        }
-        let newObj = Generator()
-        try! realm.write { realm.add(newObj) }
-        return newObj
-    }()
+    var allSourceBricks: Results<Brick> = try! Realm().objects(Brick).sorted("title")
+    var sourceBricks: Results<Brick> = try! Realm().objects(Brick).sorted("title")
+    var generators: Results<Generator> = try! Realm().objects(Generator).sorted("title")
     
     var isReloading = false
     
@@ -42,21 +39,46 @@ class GeneratorViewController: NSViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUI:", name: "AddDelete", object: nil)
         
-        headerTextView.string = generator.headerText
-        footerTextView.string = generator.footerText
-        
-        updateHeaderFooterSeparator()
+        updateUI(self)
+    }
+    
+    func selectedGenerator() -> Generator {
+//        let index = generatorTableView.selectedRow
+//        NSLog("Index ist \(index)")
+//        if index == -1 {
+            return currentGenerator()
+//        }
+//        return generators[index]
+    }
+    
+    func currentGenerator() -> Generator {
+        let realm = try! Realm()
+        let obj = realm.objects(Generator).filter("isDefault = true").first
+        if obj != nil {
+            return obj!
+        }
+        let newObj = Generator()
+        newObj.title = "Default"
+        newObj.isDefault = true
+        try! realm.write { realm.add(newObj) }
+        return newObj
     }
     
     func updateUI(sender: AnyObject){
         self.isReloading = true
         bricksSourceTableView.reloadData()
         bricksDestinationTableView.reloadData()
-        updateHeaderFooterSeparator()
+        updateHeaderFooterSeparator(selectedGenerator())
+        headerTextView.string = selectedGenerator().headerText
+        footerTextView.string = selectedGenerator().footerText
+        
+//        generatorTableView.selectRowIndexes(NSIndexSet(index: generators.indexOf(currentGenerator())!), byExtendingSelection: false)
+        
         self.isReloading = false
+        
     }
     
-    func updateHeaderFooterSeparator(){
+    func updateHeaderFooterSeparator(generator: Generator){
         headerSeparatorComboBox.removeAllItems()
         headerSeparatorComboBox.addItemWithObjectValue("None")
         for (_, value) in separators.enumerate() {
@@ -86,6 +108,33 @@ class GeneratorViewController: NSViewController {
 
 extension GeneratorViewController {
 
+    @IBAction func addGeneratorButton(sender: AnyObject) {
+        let realm = try! Realm()
+        let generator = Generator()
+        generator.title = "New"
+        try! realm.write{
+            realm.add(generator)
+        }
+        if let newRowIndex = self.generators.indexOf(generator){
+            self.generatorTableView.insertRowsAtIndexes(NSIndexSet(index: newRowIndex), withAnimation: NSTableViewAnimationOptions.EffectFade)
+            self.generatorTableView.selectRowIndexes(NSIndexSet(index: newRowIndex), byExtendingSelection:false)
+            self.generatorTableView.scrollRowToVisible(newRowIndex)
+        }
+    }
+    
+    @IBAction func removeGeneratorButton(sender: AnyObject) {
+        let realm = try! Realm()
+        let generator = self.currentGenerator()
+        generatorTableView.removeRowsAtIndexes(generatorTableView.selectedRowIndexes, withAnimation: NSTableViewAnimationOptions.EffectFade)
+        try! realm.write{
+            realm.delete(generator)
+        }
+        try! realm.write{
+            self.generators[0].isDefault = true
+        }
+        updateUI(self)
+    }
+    
     @IBAction func search(sender: AnyObject) {
         let searchField = sender as! NSSearchField
         bricksSourceTableView.deselectAll(bricksSourceTableView)
@@ -102,21 +151,24 @@ extension GeneratorViewController {
     @IBAction func addButton(sender: AnyObject) {
         var bricksToMove = [Brick]()
         for index in bricksSourceTableView.selectedRowIndexes {
+            NSLog("\(index)")
             bricksToMove.append(sourceBricks[index])
         }
         let realm = try! Realm()
-        try! realm.write {
-            for brick in bricksToMove {
-                brick.inGenerator = true
-                brick.positionInGenerator = (self.destinationBricks.max("positionInGenerator") as Int?)! + 1
+        let indexesToInsert = NSMutableIndexSet()
+        for brick in bricksToMove {
+            let generatorBrick = GeneratorBrick()
+            generatorBrick.brick = brick
+            try! realm.write{
+                realm.add(generatorBrick)
+                self.currentGenerator().generatorBricks.append(generatorBrick)
+            }
+            if let index = currentGenerator().generatorBricks.indexOf(generatorBrick){
+                indexesToInsert.addIndex(index)
             }
         }
 
-        let indexesToInsert = NSMutableIndexSet()
-        for brick in bricksToMove {
-            indexesToInsert.addIndex(destinationBricks.indexOf(brick)!)
-        }
-        bricksSourceTableView.removeRowsAtIndexes(bricksSourceTableView.selectedRowIndexes, withAnimation: NSTableViewAnimationOptions.EffectFade)
+//        bricksSourceTableView.removeRowsAtIndexes(bricksSourceTableView.selectedRowIndexes, withAnimation: NSTableViewAnimationOptions.EffectFade)
         bricksDestinationTableView.insertRowsAtIndexes(indexesToInsert, withAnimation: NSTableViewAnimationOptions.EffectFade)
         
         self.bricksDestinationTableView.scrollRowToVisible(indexesToInsert.maxElement()!)
@@ -124,14 +176,17 @@ extension GeneratorViewController {
 
     @IBAction func removeButton(sender: AnyObject) {
         var bricksToMove = [Brick]()
+        var generatorBricksToMove = [GeneratorBrick]()
         for index in bricksDestinationTableView.selectedRowIndexes {
-            bricksToMove.append(destinationBricks[index])
+            generatorBricksToMove.append(selectedGenerator().generatorBricks[index])
+            if let brick = selectedGenerator().generatorBricks[index].brick{
+                bricksToMove.append(brick)
+            }
         }
         let realm = try! Realm()
         try! realm.write {
-            for brick in bricksToMove {
-                brick.inGenerator = false
-                brick.positionInGenerator = -1
+            for generatorBrick in generatorBricksToMove {
+                realm.delete(generatorBrick)
             }
         }
         
@@ -142,18 +197,14 @@ extension GeneratorViewController {
             }
         }
         bricksDestinationTableView.removeRowsAtIndexes(bricksDestinationTableView.selectedRowIndexes, withAnimation: NSTableViewAnimationOptions.EffectFade)
-        bricksSourceTableView.insertRowsAtIndexes(indexesToInsert, withAnimation: NSTableViewAnimationOptions.EffectFade)
+//        bricksSourceTableView.insertRowsAtIndexes(indexesToInsert, withAnimation: NSTableViewAnimationOptions.EffectFade)
     }
     
     @IBAction func moveUpButton(sender: AnyObject) {
         for index in bricksDestinationTableView.selectedRowIndexes {
-            if index > 0 && index < destinationBricks.count {
-                let firstItem = destinationBricks[index - 1]
-                let secondItem = destinationBricks[index]
+            if index > 0 && index < selectedGenerator().generatorBricks.count {
                 try! Realm().write{
-                    let tmp = firstItem.positionInGenerator
-                    firstItem.positionInGenerator = secondItem.positionInGenerator
-                    secondItem.positionInGenerator = tmp
+                    self.selectedGenerator().generatorBricks.move(from: index, to: index-1)
                 }
                 bricksDestinationTableView.moveRowAtIndex(index, toIndex: index - 1)
             }
@@ -162,13 +213,9 @@ extension GeneratorViewController {
     
     @IBAction func moveDownButton(sender: AnyObject) {
         for index in bricksDestinationTableView.selectedRowIndexes.reverse() {
-            if index >= 0 && index < destinationBricks.count-1 {
-                let firstItem = destinationBricks[index + 1]
-                let secondItem = destinationBricks[index]
+            if index >= 0 && index < selectedGenerator().generatorBricks.count-1 {
                 try! Realm().write{
-                    let tmp = firstItem.positionInGenerator
-                    firstItem.positionInGenerator = secondItem.positionInGenerator
-                    secondItem.positionInGenerator = tmp
+                    self.selectedGenerator().generatorBricks.move(from: index, to: index + 1)
                 }
                 bricksDestinationTableView.moveRowAtIndex(index, toIndex: index + 1)
             }
@@ -178,16 +225,18 @@ extension GeneratorViewController {
     @IBAction func generateButton(sender: AnyObject) {
         var string = String()
         string += headerTextView.string!
-        if let separator = generator.headerSeparator {
+        if let separator = selectedGenerator().headerSeparator {
             string += separator.text
         }
-        for brick in destinationBricks {
-            string += brick.text
-            if let separator = brick.separator {
-                string += separator.text
+        for generatorBrick in selectedGenerator().generatorBricks {
+            if let brick = generatorBrick.brick{
+                string += brick.text
+                if let separator = generatorBrick.separator{
+                    string += separator.text
+                }
             }
         }
-        if let separator = generator.footerSeparator {
+        if let separator = selectedGenerator().footerSeparator {
             string += separator.text
         }
         string += footerTextView.string!
@@ -201,14 +250,51 @@ extension GeneratorViewController {
 extension GeneratorViewController: NSTextViewDelegate {
     func textDidChange(notification: NSNotification) {
         try! Realm().write{
-            self.generator.headerText = self.headerTextView.string!
-            self.generator.footerText = self.footerTextView.string!
+            self.selectedGenerator().headerText = self.headerTextView.string!
+            self.selectedGenerator().footerText = self.footerTextView.string!
         }
     }
 }
 
 extension GeneratorViewController: NSTableViewDelegate {
 
+    @IBAction func endEditingText(sender: AnyObject){
+        let textField = sender as! NSTextField
+        let index = generatorTableView.rowForView(textField)
+        let generator = generators[index]
+        try! Realm().write{
+            generator.title = textField.stringValue
+        }
+    }
+    
+    func tableViewSelectionDidChange(notification: NSNotification) {
+        if let tableView = notification.object {
+            if tableView.isEqual(bricksDestinationTableView){
+                let buttonsEnabled = (tableView.selectedRowIndexes.count > 0)
+                removeButton.enabled = buttonsEnabled
+                moveUpButton.enabled = buttonsEnabled
+                moveDownButton.enabled = buttonsEnabled
+            }
+            if tableView.isEqual(bricksSourceTableView){
+                addButton.enabled = (tableView.selectedRowIndexes.count > 0)
+            }
+            if tableView.isEqual(generatorTableView){
+                if tableView.selectedRowIndexes.count > 0 {
+                    let generators = try! Realm().objects(Generator).filter("isDefault = true")
+                    let newDefaultGenerator = self.generators[tableView.selectedRow]
+                    try! Realm().write{
+                        for generator in generators {
+                            generator.isDefault = false
+                        }
+                        newDefaultGenerator.isDefault = true
+                    }
+                    updateUI(self)
+                }
+            }
+            let buttonsEnabled = (tableView.selectedRowIndexes.count > 0 && tableView.numberOfRows > 1)
+            deleteGeneratorButton.enabled = buttonsEnabled
+        }
+    }
 }
 
 extension GeneratorViewController: NSTableViewDataSource {
@@ -217,7 +303,10 @@ extension GeneratorViewController: NSTableViewDataSource {
             return self.sourceBricks.count
         }
         if aTableView.isEqual(bricksDestinationTableView) {
-            return self.destinationBricks.count
+            return selectedGenerator().generatorBricks.count
+        }
+        if aTableView.isEqual(generatorTableView) {
+            return self.generators.count
         }
         return 0
     }
@@ -231,9 +320,9 @@ extension GeneratorViewController: NSTableViewDataSource {
             (cellView as! NSTableCellView).textField!.stringValue = brick.title
         }
         if tableView.isEqual(bricksDestinationTableView) {
-            let brick = self.destinationBricks[row]
-            (cellView as! GeneratorDestinationTableCellView).textField!.stringValue = brick.title
-            
+            if let brick = selectedGenerator().generatorBricks[row].brick{
+                (cellView as! GeneratorDestinationTableCellView).textField!.stringValue = brick.title
+            }
             //Combobox für Separators mit daten füllen
             let cb = (cellView as! GeneratorDestinationTableCellView).comboBox
             cb.removeAllItems()
@@ -242,7 +331,7 @@ extension GeneratorViewController: NSTableViewDataSource {
                 cb.addItemWithObjectValue(separator.title)
             }
             //Richtigen Separator in der Combobox auswählen
-            if let separator = brick.separator {
+            if let separator = selectedGenerator().generatorBricks[row].separator {
                 if let index = separators.indexOf(separator) {
                     cb.selectItemAtIndex(index + 1)
                 }
@@ -250,9 +339,14 @@ extension GeneratorViewController: NSTableViewDataSource {
                 cb.selectItemAtIndex(0)
             }
         }
+        if tableView.isEqual(generatorTableView) {
+            let generator = self.generators[row]
+            (cellView as! NSTableCellView).textField!.stringValue = generator.title
+        }
         return cellView
     }
 }
+
 
 extension GeneratorViewController: NSComboBoxDelegate {
     func comboBoxSelectionDidChange(notification: NSNotification) {
@@ -265,7 +359,7 @@ extension GeneratorViewController: NSComboBoxDelegate {
                 }
                 
                 try! Realm().write{
-                    self.generator.headerSeparator = separator
+                    self.selectedGenerator().headerSeparator = separator
                 }
                 
             } else if cb.isEqual(footerSeparatorComboBox) && isReloading == false {
@@ -276,19 +370,20 @@ extension GeneratorViewController: NSComboBoxDelegate {
                 }
                 
                 try! Realm().write{
-                    self.generator.footerSeparator = separator
+                    self.selectedGenerator().footerSeparator = separator
                 }
             } else {
                 let index = bricksDestinationTableView.rowForView(cb)
-                if index >= 0 && index < destinationBricks.count {
-                    let brick = destinationBricks[index]
+                if index >= 0 && index < selectedGenerator().generatorBricks.count {
+                    let generatorBrick = selectedGenerator().generatorBricks[index]
                     var separator: Separator? = nil
                     if cb.indexOfSelectedItem > 0 {
                         separator = separators[cb.indexOfSelectedItem - 1]
                     }
                     try! Realm().write{
-                        brick.separator = separator
+                        generatorBrick.separator = separator
                     }
+                    
                 }
             }
         }

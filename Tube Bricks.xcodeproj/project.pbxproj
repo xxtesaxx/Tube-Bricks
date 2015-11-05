@@ -13,6 +13,7 @@
 		5E2DDB3B1BE9C95300A45A8D /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2DDB3A1BE9C95300A45A8D /* Separator.swift */; };
 		5E2DDB3D1BE9D63B00A45A8D /* GeneratorDestinationTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2DDB3C1BE9D63A00A45A8D /* GeneratorDestinationTableCellView.swift */; };
 		5E2DDB3F1BE9F59A00A45A8D /* Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2DDB3E1BE9F59A00A45A8D /* Generator.swift */; };
+		5E904F801BEB070B00384AFA /* GeneratorBrick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E904F7F1BEB070B00384AFA /* GeneratorBrick.swift */; };
 		5EDA64001BE1E803002D0C8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDA63FF1BE1E803002D0C8D /* AppDelegate.swift */; };
 		5EDA64021BE1E803002D0C8D /* BricksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDA64011BE1E803002D0C8D /* BricksViewController.swift */; };
 		5EDA64041BE1E803002D0C8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EDA64031BE1E803002D0C8D /* Assets.xcassets */; };
@@ -43,6 +44,7 @@
 		5E2DDB3A1BE9C95300A45A8D /* Separator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Separator.swift; sourceTree = "<group>"; };
 		5E2DDB3C1BE9D63A00A45A8D /* GeneratorDestinationTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratorDestinationTableCellView.swift; sourceTree = "<group>"; };
 		5E2DDB3E1BE9F59A00A45A8D /* Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generator.swift; sourceTree = "<group>"; };
+		5E904F7F1BEB070B00384AFA /* GeneratorBrick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratorBrick.swift; sourceTree = "<group>"; };
 		5EDA63FC1BE1E802002D0C8D /* Tube Bricks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tube Bricks.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EDA63FF1BE1E803002D0C8D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5EDA64011BE1E803002D0C8D /* BricksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BricksViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				5EDA64131BE1EA73002D0C8D /* Brick.swift */,
 				5E2DDB3A1BE9C95300A45A8D /* Separator.swift */,
 				5E2DDB3E1BE9F59A00A45A8D /* Generator.swift */,
+				5E904F7F1BEB070B00384AFA /* GeneratorBrick.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 				5EDA64021BE1E803002D0C8D /* BricksViewController.swift in Sources */,
 				5EDA641A1BE26351002D0C8D /* GeneratorViewController.swift in Sources */,
 				5E2DDB391BE9C8A100A45A8D /* SeparatorsViewController.swift in Sources */,
+				5E904F801BEB070B00384AFA /* GeneratorBrick.swift in Sources */,
 				5E2DDB3B1BE9C95300A45A8D /* Separator.swift in Sources */,
 				5EDA64181BE25654002D0C8D /* WindowController.swift in Sources */,
 				5EDA64001BE1E803002D0C8D /* AppDelegate.swift in Sources */,

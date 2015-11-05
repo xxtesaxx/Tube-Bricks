@@ -107,7 +107,11 @@ extension BricksViewController{
     @IBAction func removeButtonPressed(sender: AnyObject){
         if let selectedBrick = selectedBrick() {
             let realm = try! Realm()
+            let generatorBricks = realm.objects(GeneratorBrick).filter("brick = %a", selectedBrick)
             try! realm.write{
+                for generatorBrick in generatorBricks {
+                    realm.delete(generatorBrick)
+                }
                 realm.delete(selectedBrick)
                 self.tableView.removeRowsAtIndexes(NSIndexSet(index:self.tableView.selectedRow),
                     withAnimation: NSTableViewAnimationOptions.EffectFade)
