@@ -12,7 +12,6 @@ import RealmSwift
 class GeneratorBrick: Object {
     dynamic var brick: Brick?
     dynamic var separator: Separator?
-    dynamic var positionInGenerator: Int = -1
     var generator: [Generator] {
         return linkingObjects(Generator.self, forProperty: "generatorBricks")
     }
