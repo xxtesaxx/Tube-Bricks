@@ -18,12 +18,18 @@ class WindowController: NSWindowController {
             migrationBlock: { migration, oldSchemaVersion in
                 migration.enumerate(Brick.className()) { oldObject, newObject in
                     if (oldSchemaVersion < 1) {
-                        NSLog("Migrating Brick \(oldObject) to Brick \(newObject) in v1")
                     }
                 }
                 migration.enumerate(Separator.className(),{ (oldObject, newObject) -> Void in
                     if (oldSchemaVersion < 1) {
-                        NSLog("Migrating Separator \(oldObject) to Separator \(newObject) in v1")
+                    }
+                })
+                migration.enumerate(Generator.className(),{ (oldObject, newObject) -> Void in
+                    if (oldSchemaVersion < 1) {
+                    }
+                })
+                migration.enumerate(GeneratorBrick.className(),{ (oldObject, newObject) -> Void in
+                    if (oldSchemaVersion < 1) {
                     }
                 })
         })
@@ -35,7 +41,5 @@ class WindowController: NSWindowController {
         self.window?.titleVisibility = NSWindowTitleVisibility.Hidden;
         self.window?.titlebarAppearsTransparent = true;
         self.window?.styleMask |= NSFullSizeContentViewWindowMask;
-//        self.window?.titlebarAppearsTransparent = true
-//        self.window?.movableByWindowBackground  = true
     }
 }
