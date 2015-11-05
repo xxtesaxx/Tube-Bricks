@@ -19,8 +19,8 @@ class SeparatorsViewController: NSViewController {
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet var textView: NSTextView!
     @IBOutlet weak var saveButton: NSButton!
-    
-    @IBOutlet weak var segmentedControl: NSSegmentedControl!
+    @IBOutlet weak var addButton: NSButton!
+    @IBOutlet weak var deleteButton: NSButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,33 +89,30 @@ extension SeparatorsViewController{
         sendAddDeleteNotification()
     }
     
-    @IBAction func segmentedControlPressed(sender: AnyObject) {
-        let selectedIndex = segmentedControl.selectedSegment
-        segmentedControl.selectedSegment = -1
-        
-        if(selectedIndex == 0){
-            let newData = Separator(value: ["title": "New Separator", "text": ""])
-            let realm = try! Realm()
-            try! realm.write{
-                realm.add(newData)
-                if let newRowIndex = self.separators.indexOf(newData){
-                    self.tableView.insertRowsAtIndexes(NSIndexSet(index: newRowIndex), withAnimation: NSTableViewAnimationOptions.EffectFade)
-                    self.tableView.selectRowIndexes(NSIndexSet(index: newRowIndex), byExtendingSelection:false)
-                    self.tableView.scrollRowToVisible(newRowIndex)
-                }
-            }
-        }else {
-            if let selectedSeparator = selectedSeparator() {
-                let realm = try! Realm()
-                try! realm.write{
-                    realm.delete(selectedSeparator)
-                    self.tableView.removeRowsAtIndexes(NSIndexSet(index:self.tableView.selectedRow),
-                        withAnimation: NSTableViewAnimationOptions.EffectFade)
-                    self.updateDetailInfo(nil)
-                }
+    @IBAction func addButtonPressed(sender: AnyObject) {
+        let newData = Separator(value: ["title": "New Separator", "text": ""])
+        let realm = try! Realm()
+        try! realm.write{
+            realm.add(newData)
+            if let newRowIndex = self.separators.indexOf(newData){
+                self.tableView.insertRowsAtIndexes(NSIndexSet(index: newRowIndex), withAnimation: NSTableViewAnimationOptions.EffectFade)
+                self.tableView.selectRowIndexes(NSIndexSet(index: newRowIndex), byExtendingSelection:false)
+                self.tableView.scrollRowToVisible(newRowIndex)
             }
         }
         sendAddDeleteNotification()
+    }
+    @IBAction func deleteButtonPressed(sender: AnyObject) {
+        if let selectedSeparator = selectedSeparator() {
+            let realm = try! Realm()
+            try! realm.write{
+                realm.delete(selectedSeparator)
+                self.tableView.removeRowsAtIndexes(NSIndexSet(index:self.tableView.selectedRow),
+                    withAnimation: NSTableViewAnimationOptions.EffectFade)
+                self.updateDetailInfo(nil)
+            }
+            sendAddDeleteNotification()
+        }
     }
 }
 
@@ -145,7 +142,7 @@ extension SeparatorsViewController: NSTableViewDelegate {
         textField.enabled = buttonsEnabled
         textView.editable = buttonsEnabled
         textView.selectable = buttonsEnabled
-        segmentedControl.setEnabled(buttonsEnabled, forSegment: 1)
+        deleteButton.enabled = buttonsEnabled
         saveButton.enabled = buttonsEnabled
     }
 }

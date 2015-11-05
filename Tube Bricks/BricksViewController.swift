@@ -19,8 +19,9 @@ class BricksViewController: NSViewController {
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet var textView: NSTextView!
     @IBOutlet weak var saveButton: NSButton!
+    @IBOutlet weak var deleteButton: NSButton!
+    @IBOutlet weak var addButton: NSButton!
     
-    @IBOutlet weak var segmentedControl: NSSegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,34 +90,33 @@ extension BricksViewController{
         sendAddDeleteNotification()
     }
     
-    @IBAction func segmentedControlPressed(sender: AnyObject) {
-        let selectedIndex = segmentedControl.selectedSegment
-        segmentedControl.selectedSegment = -1
-        
-        if(selectedIndex == 0){
-            let newData = Brick(value: ["title": "New Entry", "text": ""])
-            let realm = try! Realm()
-            try! realm.write{
-                realm.add(newData)
-                if let newRowIndex = self.bricks.indexOf(newData){
+    @IBAction func addButtonPressed(sender: AnyObject){
+        let newData = Brick(value: ["title": "New Entry", "text": ""])
+        let realm = try! Realm()
+        try! realm.write{
+            realm.add(newData)
+            if let newRowIndex = self.bricks.indexOf(newData){
                 self.tableView.insertRowsAtIndexes(NSIndexSet(index: newRowIndex), withAnimation: NSTableViewAnimationOptions.EffectFade)
                 self.tableView.selectRowIndexes(NSIndexSet(index: newRowIndex), byExtendingSelection:false)
                 self.tableView.scrollRowToVisible(newRowIndex)
-                }
-            }
-        }else {
-            if let selectedBrick = selectedBrick() {
-                let realm = try! Realm()
-                try! realm.write{
-                    realm.delete(selectedBrick)
-                    self.tableView.removeRowsAtIndexes(NSIndexSet(index:self.tableView.selectedRow),
-                        withAnimation: NSTableViewAnimationOptions.EffectFade)
-                    self.updateDetailInfo(nil)
-                }
             }
         }
         sendAddDeleteNotification()
     }
+    
+    @IBAction func removeButtonPressed(sender: AnyObject){
+        if let selectedBrick = selectedBrick() {
+            let realm = try! Realm()
+            try! realm.write{
+                realm.delete(selectedBrick)
+                self.tableView.removeRowsAtIndexes(NSIndexSet(index:self.tableView.selectedRow),
+                    withAnimation: NSTableViewAnimationOptions.EffectFade)
+                self.updateDetailInfo(nil)
+            }
+            sendAddDeleteNotification()
+        }
+    }
+    
 }
 
 // MARK: - NSTableViewDataSource
@@ -145,7 +145,7 @@ extension BricksViewController: NSTableViewDelegate {
         textField.enabled = buttonsEnabled
         textView.editable = buttonsEnabled
         textView.selectable = buttonsEnabled
-        segmentedControl.setEnabled(buttonsEnabled, forSegment: 1)
+        deleteButton.enabled = buttonsEnabled
         saveButton.enabled = buttonsEnabled
     }
 }

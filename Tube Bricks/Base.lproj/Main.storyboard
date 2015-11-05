@@ -681,7 +681,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="X5q-Mr-9Xw">
-                                            <rect key="frame" x="0.0" y="0.0" width="211" height="0.0"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="211" height="174"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <animations/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -815,24 +815,6 @@
                                     <animations/>
                                 </scroller>
                             </scrollView>
-                            <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="szX-Pa-oRD">
-                                <rect key="frame" x="20" y="19" width="67" height="23"/>
-                                <animations/>
-                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="smallSquare" trackingMode="selectAny" id="IbI-Aq-TLy">
-                                    <font key="font" metaFont="system"/>
-                                    <segments>
-                                        <segment image="NSAddTemplate" width="32">
-                                            <nil key="label"/>
-                                        </segment>
-                                        <segment image="NSRemoveTemplate" width="32" enabled="NO" tag="1">
-                                            <nil key="label"/>
-                                        </segment>
-                                    </segments>
-                                </segmentedCell>
-                                <connections>
-                                    <action selector="segmentedControlPressed:" target="XfG-lQ-9wD" id="Gjy-4K-lei"/>
-                                </connections>
-                            </segmentedControl>
                             <box horizontalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="qas-fH-PHy">
                                 <rect key="frame" x="239" y="12" width="5" height="251"/>
                                 <animations/>
@@ -846,6 +828,8 @@
                                 <buttonCell key="cell" type="smallSquare" title="Save" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="sfw-6G-mVs">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent">s</string>
+                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="saveButtonPressed:" target="XfG-lQ-9wD" id="HHu-lG-WN7"/>
@@ -863,9 +847,43 @@
                                     <action selector="search:" target="XfG-lQ-9wD" id="Rb2-fe-sry"/>
                                 </connections>
                             </searchField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5zA-mb-WYf">
+                                <rect key="frame" x="20" y="19" width="34" height="23"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="DKU-DF-k9r"/>
+                                    <constraint firstAttribute="width" constant="34" id="MeD-yz-v5D"/>
+                                </constraints>
+                                <animations/>
+                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eGR-ru-w6C">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent">n</string>
+                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="addButtonPressed:" target="XfG-lQ-9wD" id="d2M-Yy-zpT"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gov-TV-idF">
+                                <rect key="frame" x="53" y="19" width="34" height="23"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="34" id="itz-Um-wo2"/>
+                                    <constraint firstAttribute="height" constant="21" id="tqD-mg-29L"/>
+                                </constraints>
+                                <animations/>
+                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="F7i-1b-rhn">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="removeButtonPressed:" target="XfG-lQ-9wD" id="dzJ-cB-KRK"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="szX-Pa-oRD" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="3gY-ej-MIQ"/>
                             <constraint firstItem="qas-fH-PHy" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="12" id="5P2-bd-KpI"/>
                             <constraint firstAttribute="trailing" secondItem="mMZ-SC-cPH" secondAttribute="trailing" constant="20" id="62X-Gh-uAO"/>
                             <constraint firstItem="mMZ-SC-cPH" firstAttribute="top" secondItem="EMf-Ww-Hw7" secondAttribute="bottom" constant="8" id="ABT-n6-HvP"/>
@@ -880,25 +898,30 @@
                             <constraint firstAttribute="trailing" secondItem="Xt8-ZV-cEf" secondAttribute="trailing" constant="20" id="UGx-Dt-Usc"/>
                             <constraint firstItem="C1I-Bs-8UF" firstAttribute="width" secondItem="UzS-CD-Gq7" secondAttribute="width" id="WHC-mc-eMS"/>
                             <constraint firstItem="qas-fH-PHy" firstAttribute="leading" secondItem="UzS-CD-Gq7" secondAttribute="trailing" constant="8" id="X40-qI-NEg"/>
+                            <constraint firstAttribute="bottom" secondItem="gov-TV-idF" secondAttribute="bottom" constant="20" id="YvA-eE-scc"/>
                             <constraint firstItem="en5-yR-Y2B" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="bKs-Ue-zye"/>
                             <constraint firstAttribute="trailing" secondItem="neb-7l-cDA" secondAttribute="trailing" constant="20" id="cM0-Tr-clF"/>
                             <constraint firstItem="Xt8-ZV-cEf" firstAttribute="top" secondItem="neb-7l-cDA" secondAttribute="bottom" constant="8" id="dTd-mW-T44"/>
                             <constraint firstItem="qas-fH-PHy" firstAttribute="leading" secondItem="en5-yR-Y2B" secondAttribute="trailing" constant="8" id="f29-qV-ndp"/>
-                            <constraint firstItem="szX-Pa-oRD" firstAttribute="top" secondItem="en5-yR-Y2B" secondAttribute="bottom" constant="8" id="gq6-Jy-sMf"/>
+                            <constraint firstItem="5zA-mb-WYf" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="gS9-yH-3Qb"/>
                             <constraint firstAttribute="bottom" secondItem="qas-fH-PHy" secondAttribute="bottom" constant="12" id="ho8-92-miX"/>
+                            <constraint firstItem="gov-TV-idF" firstAttribute="leading" secondItem="5zA-mb-WYf" secondAttribute="trailing" constant="-1" id="krJ-rW-NQW"/>
                             <constraint firstItem="UzS-CD-Gq7" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="lUN-Mh-XLI"/>
                             <constraint firstItem="neb-7l-cDA" firstAttribute="leading" secondItem="qas-fH-PHy" secondAttribute="trailing" constant="8" id="nj8-Cl-MBg"/>
+                            <constraint firstItem="5zA-mb-WYf" firstAttribute="top" secondItem="en5-yR-Y2B" secondAttribute="bottom" constant="8" id="p21-ek-Kbk"/>
                             <constraint firstItem="mMZ-SC-cPH" firstAttribute="leading" secondItem="qas-fH-PHy" secondAttribute="trailing" constant="8" id="p2t-gv-4nT"/>
                             <constraint firstItem="EMf-Ww-Hw7" firstAttribute="leading" secondItem="qas-fH-PHy" secondAttribute="trailing" constant="8" id="pMn-Ln-dTs"/>
-                            <constraint firstAttribute="bottom" secondItem="szX-Pa-oRD" secondAttribute="bottom" constant="20" id="sDZ-bU-Kkx"/>
+                            <constraint firstAttribute="bottom" secondItem="5zA-mb-WYf" secondAttribute="bottom" constant="20" id="qQV-bn-Ad7"/>
+                            <constraint firstItem="gov-TV-idF" firstAttribute="top" secondItem="en5-yR-Y2B" secondAttribute="bottom" constant="8" id="rYp-jv-6iK"/>
                             <constraint firstAttribute="trailing" secondItem="EMf-Ww-Hw7" secondAttribute="trailing" constant="20" id="sIh-2k-aoC"/>
                             <constraint firstItem="C1I-Bs-8UF" firstAttribute="leading" secondItem="qas-fH-PHy" secondAttribute="trailing" constant="8" id="sq5-fw-iTd"/>
                         </constraints>
                         <animations/>
                     </view>
                     <connections>
+                        <outlet property="addButton" destination="5zA-mb-WYf" id="8Fr-Kj-pqy"/>
+                        <outlet property="deleteButton" destination="gov-TV-idF" id="Ooe-hK-Sb7"/>
                         <outlet property="saveButton" destination="mMZ-SC-cPH" id="KC2-7R-Zwe"/>
-                        <outlet property="segmentedControl" destination="szX-Pa-oRD" id="yA6-aU-thF"/>
                         <outlet property="tableView" destination="X5q-Mr-9Xw" id="nfa-9c-oE5"/>
                         <outlet property="textField" destination="neb-7l-cDA" id="M6b-tf-tjF"/>
                         <outlet property="textView" destination="yM7-2R-f1Q" id="P4E-BS-HfR"/>
@@ -1085,6 +1108,8 @@
                                 <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSGoRightTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VXC-7H-fEF">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent"></string>
+                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="addButton:" target="UaA-z8-EAj" id="eyl-UN-Uej"/>
@@ -1096,6 +1121,8 @@
                                 <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSGoLeftTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Hux-p5-WgK">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent"></string>
+                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="removeButton:" target="UaA-z8-EAj" id="OT2-cF-lKZ"/>
@@ -1152,6 +1179,8 @@
                                 <buttonCell key="cell" type="smallSquare" title="Generate" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gH5-xA-gfB">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent">g</string>
+                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="generateButton:" target="UaA-z8-EAj" id="IaJ-CW-Hs9"/>
@@ -1175,6 +1204,8 @@
                                 <buttonCell key="cell" type="smallSquare" title="⬆" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zkJ-we-B3c">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent"></string>
+                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="moveUpButton:" target="UaA-z8-EAj" id="03c-ef-Xbz"/>
@@ -1186,6 +1217,8 @@
                                 <buttonCell key="cell" type="smallSquare" title="⬇" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LKF-dA-y7A">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent"></string>
+                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="moveDownButton:" target="UaA-z8-EAj" id="Umy-0h-kuX"/>
@@ -1536,24 +1569,6 @@
                                     <animations/>
                                 </scroller>
                             </scrollView>
-                            <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cCZ-jN-Anu">
-                                <rect key="frame" x="20" y="19" width="67" height="23"/>
-                                <animations/>
-                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="smallSquare" trackingMode="selectAny" id="wYg-X1-G0F">
-                                    <font key="font" metaFont="system"/>
-                                    <segments>
-                                        <segment image="NSAddTemplate" width="32">
-                                            <nil key="label"/>
-                                        </segment>
-                                        <segment image="NSRemoveTemplate" width="32" enabled="NO" tag="1">
-                                            <nil key="label"/>
-                                        </segment>
-                                    </segments>
-                                </segmentedCell>
-                                <connections>
-                                    <action selector="segmentedControlPressed:" target="5ug-Fh-wIM" id="Bvn-5J-EBD"/>
-                                </connections>
-                            </segmentedControl>
                             <box horizontalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Omi-H6-GE6">
                                 <rect key="frame" x="239" y="12" width="5" height="251"/>
                                 <animations/>
@@ -1567,6 +1582,8 @@
                                 <buttonCell key="cell" type="smallSquare" title="Save" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6OH-dJ-dWm">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent">s</string>
+                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="saveButtonPressed:" target="5ug-Fh-wIM" id="wNu-ZK-JFJ"/>
@@ -1584,33 +1601,71 @@
                                     <action selector="search:" target="5ug-Fh-wIM" id="biz-5h-I48"/>
                                 </connections>
                             </searchField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0yS-pL-mLN">
+                                <rect key="frame" x="20" y="19" width="34" height="23"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="34" id="6ay-Ng-5ow"/>
+                                    <constraint firstAttribute="height" constant="21" id="RXA-Nt-VoU"/>
+                                </constraints>
+                                <animations/>
+                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lV5-5C-R1c">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent">n</string>
+                                    <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="addButtonPressed:" target="5ug-Fh-wIM" id="7B2-MC-Xt7"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cRW-AX-Mmg">
+                                <rect key="frame" x="53" y="19" width="34" height="23"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="K5G-sI-dfn"/>
+                                    <constraint firstAttribute="width" constant="34" id="N7F-Fq-TqF"/>
+                                </constraints>
+                                <animations/>
+                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9Kl-QE-Ya6">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="deleteButtonPressed:" target="5ug-Fh-wIM" id="Rfr-xP-1zQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="Omi-H6-GE6" secondAttribute="bottom" constant="12" id="33p-2H-cVY"/>
-                            <constraint firstItem="cCZ-jN-Anu" firstAttribute="leading" secondItem="c9x-Qe-KaK" secondAttribute="leading" constant="20" id="3x5-9K-AHC"/>
                             <constraint firstItem="Omi-H6-GE6" firstAttribute="leading" secondItem="2Ny-4c-ard" secondAttribute="trailing" constant="8" id="7b4-ao-wzb"/>
                             <constraint firstAttribute="trailing" secondItem="klp-8P-h0A" secondAttribute="trailing" constant="20" id="Cqn-oZ-wxU"/>
                             <constraint firstAttribute="trailing" secondItem="BgF-ly-uUq" secondAttribute="trailing" constant="20" id="Dwk-9o-61e"/>
                             <constraint firstItem="BgF-ly-uUq" firstAttribute="leading" secondItem="Omi-H6-GE6" secondAttribute="trailing" constant="8" id="DzG-Px-ggU"/>
+                            <constraint firstAttribute="bottom" secondItem="cRW-AX-Mmg" secondAttribute="bottom" constant="20" id="Evn-rR-bCP"/>
                             <constraint firstItem="skL-lf-Tka" firstAttribute="width" secondItem="2Ny-4c-ard" secondAttribute="width" id="GX4-MV-AXL"/>
                             <constraint firstItem="skL-lf-Tka" firstAttribute="top" secondItem="c9x-Qe-KaK" secondAttribute="top" constant="20" id="GyH-Ca-LW4"/>
+                            <constraint firstItem="cRW-AX-Mmg" firstAttribute="leading" secondItem="0yS-pL-mLN" secondAttribute="trailing" constant="-1" id="Gyp-f3-Lmd"/>
                             <constraint firstItem="Omi-H6-GE6" firstAttribute="leading" secondItem="j4t-1k-BuD" secondAttribute="trailing" constant="8" id="Hjv-K2-kgC"/>
                             <constraint firstItem="skL-lf-Tka" firstAttribute="leading" secondItem="Omi-H6-GE6" secondAttribute="trailing" constant="8" id="K8X-MN-M8k"/>
-                            <constraint firstItem="cCZ-jN-Anu" firstAttribute="top" secondItem="j4t-1k-BuD" secondAttribute="bottom" constant="8" id="Kmm-Ws-oxH"/>
+                            <constraint firstItem="cRW-AX-Mmg" firstAttribute="top" secondItem="j4t-1k-BuD" secondAttribute="bottom" constant="8" id="LUg-cC-zom"/>
                             <constraint firstItem="klp-8P-h0A" firstAttribute="leading" secondItem="Omi-H6-GE6" secondAttribute="trailing" constant="8" id="NQw-h2-tk2"/>
                             <constraint firstItem="j4t-1k-BuD" firstAttribute="leading" secondItem="c9x-Qe-KaK" secondAttribute="leading" constant="20" id="Oei-et-z2n"/>
                             <constraint firstItem="2Ny-4c-ard" firstAttribute="top" secondItem="c9x-Qe-KaK" secondAttribute="top" constant="20" id="QFt-6v-l1r"/>
-                            <constraint firstAttribute="bottom" secondItem="cCZ-jN-Anu" secondAttribute="bottom" constant="20" id="R5e-Y7-9yn"/>
                             <constraint firstItem="j4t-1k-BuD" firstAttribute="top" secondItem="2Ny-4c-ard" secondAttribute="bottom" constant="8" id="U0Q-54-LI1"/>
                             <constraint firstItem="klp-8P-h0A" firstAttribute="top" secondItem="h6T-jB-paJ" secondAttribute="bottom" constant="8" id="VKI-um-MZf"/>
+                            <constraint firstItem="0yS-pL-mLN" firstAttribute="leading" secondItem="c9x-Qe-KaK" secondAttribute="leading" constant="20" id="XLo-Ff-oqA"/>
                             <constraint firstItem="Omi-H6-GE6" firstAttribute="top" secondItem="c9x-Qe-KaK" secondAttribute="top" constant="12" id="YZy-wB-8fe"/>
                             <constraint firstItem="5jb-GS-GDa" firstAttribute="leading" secondItem="Omi-H6-GE6" secondAttribute="trailing" constant="8" id="Yao-x0-RuD"/>
                             <constraint firstItem="h6T-jB-paJ" firstAttribute="leading" secondItem="Omi-H6-GE6" secondAttribute="trailing" constant="8" id="cxq-yU-ISC"/>
+                            <constraint firstAttribute="bottom" secondItem="0yS-pL-mLN" secondAttribute="bottom" constant="20" id="dAo-uy-8rn"/>
                             <constraint firstItem="2Ny-4c-ard" firstAttribute="leading" secondItem="c9x-Qe-KaK" secondAttribute="leading" constant="20" id="g0Z-Mi-fzn"/>
                             <constraint firstAttribute="trailing" secondItem="h6T-jB-paJ" secondAttribute="trailing" constant="20" id="gOc-Hj-T8e"/>
                             <constraint firstAttribute="trailing" secondItem="skL-lf-Tka" secondAttribute="trailing" constant="20" id="hd6-2Z-3bM"/>
                             <constraint firstAttribute="trailing" secondItem="5jb-GS-GDa" secondAttribute="trailing" constant="20" id="oqn-Rr-CWV"/>
                             <constraint firstItem="h6T-jB-paJ" firstAttribute="top" secondItem="skL-lf-Tka" secondAttribute="bottom" constant="8" id="phR-9S-BSO"/>
+                            <constraint firstItem="0yS-pL-mLN" firstAttribute="top" secondItem="j4t-1k-BuD" secondAttribute="bottom" constant="8" id="qqf-eO-rzY"/>
                             <constraint firstItem="5jb-GS-GDa" firstAttribute="top" secondItem="BgF-ly-uUq" secondAttribute="bottom" constant="8" id="s2p-Bv-u1T"/>
                             <constraint firstAttribute="bottom" secondItem="5jb-GS-GDa" secondAttribute="bottom" constant="20" id="sOd-qh-wTc"/>
                             <constraint firstItem="BgF-ly-uUq" firstAttribute="top" secondItem="klp-8P-h0A" secondAttribute="bottom" constant="8" id="uSO-A7-Fph"/>
@@ -1618,8 +1673,9 @@
                         <animations/>
                     </view>
                     <connections>
+                        <outlet property="addButton" destination="0yS-pL-mLN" id="zEC-BN-5Mc"/>
+                        <outlet property="deleteButton" destination="cRW-AX-Mmg" id="aN2-hF-43D"/>
                         <outlet property="saveButton" destination="5jb-GS-GDa" id="DuP-nI-nlu"/>
-                        <outlet property="segmentedControl" destination="cCZ-jN-Anu" id="DKp-UB-5f0"/>
                         <outlet property="tableView" destination="FCd-GL-10r" id="qQb-lz-dMZ"/>
                         <outlet property="textField" destination="h6T-jB-paJ" id="0cj-0z-rNF"/>
                         <outlet property="textView" destination="bQi-NQ-EgF" id="fZB-As-eq7"/>

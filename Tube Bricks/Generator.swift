@@ -14,4 +14,5 @@ class Generator: Object {
     dynamic var footerText: String = ""
     dynamic var headerSeparator: Separator?
     dynamic var footerSeparator: Separator?
+    var bricks = List<Brick>()
 }
