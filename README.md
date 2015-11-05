@@ -10,7 +10,7 @@ Separators are the other main component of this App. Every Separator also has a 
 ![alt tag](https://github.com/xxtesaxx/Tube-Bricks/blob/master/Screenshots/SeparatorsTab.png)
 
 ## Generator
-Here your bricks and separators come to life. Add your bricks, chose a separator for each brick and generate your description. There are also two textfields for freetext, the header and the footer. Each separator is inserted right after the brick or the header. Only the separator for the footer is inserted between the last brick and the text for the footer. Once you click generate, the generated text is copied to your pastebord.
+Here your bricks and separators come to life. Add your bricks, chose a separator for each brick and generate your description. There are also two textfields for freetext, the header and the footer. Each separator is inserted right after the brick or the header. Only the separator for the footer is inserted between the last brick and the text for the footer. Once you click generate, the generated text is copied to your pastebord. You can also add more profiles so you can store default configurations for your different videos types.
 ![alt tag](https://github.com/xxtesaxx/Tube-Bricks/blob/master/Screenshots/GeneratorTab.png)
 
 Here's how the finished text for the sample above looks:
