@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tube Bricks/GeneratorViewController.swift"
-            timestampString = "468474282.348991"
+            timestampString = "468480067.476848"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "316"
-            endingLineNumber = "316"
+            startingLineNumber = "319"
+            endingLineNumber = "319"
             landmarkName = "tableView(_:viewForTableColumn:row:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tube Bricks/GeneratorViewController.swift"
-            timestampString = "468474282.348991"
+            timestampString = "468480067.476848"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "351"
-            endingLineNumber = "351"
+            startingLineNumber = "354"
+            endingLineNumber = "354"
             landmarkName = "comboBoxSelectionDidChange(_:)"
             landmarkType = "5">
          </BreakpointContent>

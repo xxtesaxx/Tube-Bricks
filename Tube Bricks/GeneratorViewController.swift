@@ -120,6 +120,9 @@ extension GeneratorViewController {
         let generator = self.currentGenerator()
         generatorTableView.removeRowsAtIndexes(generatorTableView.selectedRowIndexes, withAnimation: NSTableViewAnimationOptions.EffectFade)
         try! realm.write{
+            for generatorBrick in generator.generatorBricks {
+                realm.delete(generatorBrick)
+            }
             realm.delete(generator)
         }
         try! realm.write{
