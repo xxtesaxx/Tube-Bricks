@@ -275,7 +275,6 @@ extension GeneratorViewController: NSTableViewDelegate {
                 addButton.enabled = (tableView.selectedRowIndexes.count > 0)
             }
             if tableView.isEqual(generatorTableView){
-                //TODO: Move altered generator row to right place in tableview
                 if tableView.selectedRowIndexes.count > 0 {
                     let generators = try! Realm().objects(Generator).filter("isDefault = true")
                     let newDefaultGenerator = self.generators[tableView.selectedRow]

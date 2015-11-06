@@ -656,7 +656,7 @@
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <rect key="contentRect" x="597" y="369" width="481" height="275"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
-                        <value key="minSize" type="size" width="482" height="281"/>
+                        <value key="minSize" type="size" width="481" height="275"/>
                     </window>
                     <connections>
                         <segue destination="2nC-vC-3sb" kind="relationship" relationship="window.shadowedContentViewController" id="qQ3-Ch-itQ"/>
@@ -738,10 +738,10 @@
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </clipView>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="176" id="YGY-dl-KNx"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="182" id="YGY-dl-KNx"/>
                                 </constraints>
                                 <animations/>
-                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="n3U-EE-cxU">
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="n3U-EE-cxU">
                                     <rect key="frame" x="1" y="165" width="211" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
@@ -942,7 +942,7 @@ CA
                         <tabViewItem id="8tb-ce-OQe"/>
                     </tabViewItems>
                     <tabView key="tabView" type="noTabsNoBorder" id="tQd-X1-7dO">
-                        <rect key="frame" x="0.0" y="0.0" width="482" height="281"/>
+                        <rect key="frame" x="0.0" y="0.0" width="481" height="275"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
                         <font key="font" metaFont="message"/>
@@ -1030,7 +1030,7 @@ CA
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </clipView>
                                 <animations/>
-                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="2VN-s5-KKu">
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="2VN-s5-KKu">
                                     <rect key="frame" x="1" y="194" width="161" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
@@ -1307,7 +1307,7 @@ CA
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="104" id="YgX-cQ-hSa"/>
                                 </constraints>
                                 <animations/>
-                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="jNj-lB-r1M">
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="jNj-lB-r1M">
                                     <rect key="frame" x="1" y="87" width="161" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
@@ -1441,7 +1441,7 @@ CA
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </clipView>
                                 <animations/>
-                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="I4V-Zh-wPs">
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="I4V-Zh-wPs">
                                     <rect key="frame" x="1" y="56" width="98" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
@@ -1552,7 +1552,7 @@ CA
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="FCd-GL-10r">
-                                            <rect key="frame" x="0.0" y="0.0" width="211" height="0.0"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="211" height="180"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <animations/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -1609,10 +1609,10 @@ CA
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </clipView>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="176" id="rOH-3y-MM4"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="182" id="rOH-3y-MM4"/>
                                 </constraints>
                                 <animations/>
-                                <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="iq8-Ep-8Ef">
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="iq8-Ep-8Ef">
                                     <rect key="frame" x="1" y="165" width="211" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
