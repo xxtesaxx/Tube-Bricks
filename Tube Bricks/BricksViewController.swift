@@ -142,6 +142,23 @@ extension BricksViewController: NSTableViewDataSource {
 
     // MARK: - NSTableViewDelegate
 extension BricksViewController: NSTableViewDelegate {
+    
+    @IBAction func endEditingText(sender: AnyObject){
+        let textField = sender as! NSTextField
+        let index = tableView.rowForView(textField)
+        let brick = bricks[index]
+        try! Realm().write{
+            brick.title = textField.stringValue
+        }
+        if let newIndex = bricks.indexOf(brick) {
+            if index != newIndex {
+                tableView.moveRowAtIndex(index, toIndex: newIndex)
+            }
+        }
+        updateDetailInfo(brick)
+        sendAddDeleteNotification()
+    }
+
     func tableViewSelectionDidChange(notification: NSNotification) {
         let selectedData = selectedBrick()
         updateDetailInfo(selectedData)

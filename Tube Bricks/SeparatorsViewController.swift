@@ -135,6 +135,23 @@ extension SeparatorsViewController: NSTableViewDataSource {
 
 // MARK: - NSTableViewDelegate
 extension SeparatorsViewController: NSTableViewDelegate {
+    
+    @IBAction func endEditingText(sender: AnyObject){
+        let textField = sender as! NSTextField
+        let index = tableView.rowForView(textField)
+        let separator = separators[index]
+        try! Realm().write{
+            separator.title = textField.stringValue
+        }
+        if let newIndex = separators.indexOf(separator) {
+            if index != newIndex {
+                tableView.moveRowAtIndex(index, toIndex: newIndex)
+            }
+        }
+        updateDetailInfo(separator)
+        sendAddDeleteNotification()
+    }
+    
     func tableViewSelectionDidChange(notification: NSNotification) {
         let selectedData = selectedSeparator()
         updateDetailInfo(selectedData)
