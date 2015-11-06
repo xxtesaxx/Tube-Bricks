@@ -57,7 +57,9 @@ class GeneratorViewController: NSViewController {
     
     func updateUI(sender: AnyObject){
         self.isReloading = true
+        bricksSourceTableView.deselectAll(self)
         bricksSourceTableView.reloadData()
+        bricksDestinationTableView.deselectAll(self)
         bricksDestinationTableView.reloadData()
         updateHeaderFooterSeparator(currentGenerator())
         headerTextView.string = currentGenerator().headerText
@@ -142,7 +144,6 @@ extension GeneratorViewController {
     @IBAction func addButton(sender: AnyObject) {
         var bricksToMove = [Brick]()
         for index in bricksSourceTableView.selectedRowIndexes {
-            NSLog("\(index)")
             bricksToMove.append(sourceBricks[index])
         }
         let realm = try! Realm()
@@ -231,7 +232,6 @@ extension GeneratorViewController {
             string += separator.text
         }
         string += footerTextView.string!
-        NSLog("Text lautet:\n\(string)")
         let pasteboard = NSPasteboard.generalPasteboard()
         pasteboard.clearContents()
         pasteboard.writeObjects([string])
