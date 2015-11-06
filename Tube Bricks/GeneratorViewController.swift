@@ -40,6 +40,9 @@ class GeneratorViewController: NSViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUI:", name: "AddDelete", object: nil)
         
         updateUI(self)
+        
+        bricksDestinationTableView.registerForDraggedTypes(["jan.le.mann.generatorbricks"])
+        bricksDestinationTableView.registerForDraggedTypes(["jan.le.mann.bricks"])
     }
     
     func currentGenerator() -> Generator {
@@ -118,6 +121,10 @@ extension GeneratorViewController {
     }
     
     @IBAction func removeGeneratorButton(sender: AnyObject) {
+        if generators.count < 2 {
+            return
+        }
+        
         let realm = try! Realm()
         let generator = self.currentGenerator()
         generatorTableView.removeRowsAtIndexes(generatorTableView.selectedRowIndexes, withAnimation: NSTableViewAnimationOptions.EffectFade)
@@ -165,7 +172,6 @@ extension GeneratorViewController {
             }
         }
 
-//        bricksSourceTableView.removeRowsAtIndexes(bricksSourceTableView.selectedRowIndexes, withAnimation: NSTableViewAnimationOptions.EffectFade)
         bricksDestinationTableView.insertRowsAtIndexes(indexesToInsert, withAnimation: NSTableViewAnimationOptions.EffectFade)
         
         self.bricksDestinationTableView.scrollRowToVisible(indexesToInsert.maxElement()!)
@@ -194,7 +200,7 @@ extension GeneratorViewController {
             }
         }
         bricksDestinationTableView.removeRowsAtIndexes(bricksDestinationTableView.selectedRowIndexes, withAnimation: NSTableViewAnimationOptions.EffectFade)
-//        bricksSourceTableView.insertRowsAtIndexes(indexesToInsert, withAnimation: NSTableViewAnimationOptions.EffectFade)
+
     }
     
     @IBAction func moveUpButton(sender: AnyObject) {
@@ -295,9 +301,9 @@ extension GeneratorViewController: NSTableViewDelegate {
                     }
                     updateUI(self)
                 }
+                let buttonsEnabled = (tableView.selectedRowIndexes.count > 0 && tableView.numberOfRows > 1)
+                deleteGeneratorButton.enabled = buttonsEnabled
             }
-            let buttonsEnabled = (tableView.selectedRowIndexes.count > 0 && tableView.numberOfRows > 1)
-            deleteGeneratorButton.enabled = buttonsEnabled
         }
     }
 }
@@ -351,6 +357,90 @@ extension GeneratorViewController: NSTableViewDataSource {
             (cellView as! NSTableCellView).textField!.stringValue = generator.title
         }
         return cellView
+    }
+    
+    
+    
+    func tableView(tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
+        if tableView.isEqual(bricksDestinationTableView){
+            let item = NSPasteboardItem()
+            item.setString(String(row), forType: "jan.le.mann.generatorbricks")
+            return item
+        }
+        if tableView.isEqual(bricksSourceTableView){
+            let item = NSPasteboardItem()
+            item.setString(String(row), forType: "jan.le.mann.bricks")
+            return item
+        }
+        return nil
+    }
+    
+    func tableView(tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
+        if tableView.isEqual(bricksDestinationTableView){
+            if dropOperation == .Above {
+                return .Move
+            }
+        }
+        return .None
+    }
+    
+    func tableView(tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
+        
+        if tableView.isEqual(bricksDestinationTableView){
+            var oldIndexes = [Int]()
+            var newIndexes = [Int]()
+            info.enumerateDraggingItemsWithOptions(.ClearNonenumeratedImages, forView: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) {
+                if let item = ($0.0.item as? NSPasteboardItem) {
+                    if let index = item.stringForType("jan.le.mann.generatorbricks") {
+                        if let indexInt = Int(index) {
+                            oldIndexes.append(indexInt)
+                        }
+                    }
+                    if let index = item.stringForType("jan.le.mann.bricks") {
+                        if let indexInt = Int(index) {
+                            newIndexes.append(indexInt)
+                        }
+                    }
+                }
+            }
+
+            var oldIndexOffset = 0
+            var newIndexOffset = 0
+        
+            let realm = try! Realm()
+            let generator = currentGenerator()
+            tableView.beginUpdates()
+            for oldIndex in oldIndexes {
+                if oldIndex < row {
+                    try! Realm().write{
+                        generator.generatorBricks.move(from: oldIndex + oldIndexOffset, to: row - 1)
+                    }
+                    tableView.moveRowAtIndex(oldIndex + oldIndexOffset, toIndex: row - 1)
+                    --oldIndexOffset
+                } else {
+                    try! realm.write{
+                        generator.generatorBricks.move(from: oldIndex, to: row + newIndexOffset)
+                    }
+                    tableView.moveRowAtIndex(oldIndex, toIndex: row + newIndexOffset)
+                    ++newIndexOffset
+                }
+            }
+            
+            for newIndex in newIndexes.reverse() {
+                let brick = sourceBricks[newIndex]
+                let generatorBrick = GeneratorBrick()
+                generatorBrick.brick = brick
+                try! realm.write{
+                    realm.add(generatorBrick)
+                    generator.generatorBricks.insert(generatorBrick, atIndex: row)
+                }
+                tableView.insertRowsAtIndexes(NSIndexSet(index: row), withAnimation: .EffectFade)
+            }
+            tableView.endUpdates()
+        
+            return true
+        }
+        return false
     }
 }
 
