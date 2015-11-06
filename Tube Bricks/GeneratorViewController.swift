@@ -99,6 +99,8 @@ class GeneratorViewController: NSViewController {
     }
 }
 
+// MARK: - IBActions
+
 extension GeneratorViewController {
 
     @IBAction func addGeneratorButton(sender: AnyObject) {
@@ -241,6 +243,8 @@ extension GeneratorViewController {
     }
 }
 
+// MARK: - NSTextViewDelegate
+
 extension GeneratorViewController: NSTextViewDelegate {
     func textDidChange(notification: NSNotification) {
         try! Realm().write{
@@ -249,6 +253,8 @@ extension GeneratorViewController: NSTextViewDelegate {
         }
     }
 }
+
+// MARK: - NSTableViewDelegate
 
 extension GeneratorViewController: NSTableViewDelegate {
 
@@ -295,6 +301,8 @@ extension GeneratorViewController: NSTableViewDelegate {
         }
     }
 }
+
+// MARK: - NSTableViewDataSource
 
 extension GeneratorViewController: NSTableViewDataSource {
     func numberOfRowsInTableView(aTableView: NSTableView) -> Int {
@@ -346,6 +354,7 @@ extension GeneratorViewController: NSTableViewDataSource {
     }
 }
 
+// MARK: - NSComboBoxDelegate
 
 extension GeneratorViewController: NSComboBoxDelegate {
     func comboBoxSelectionDidChange(notification: NSNotification) {
