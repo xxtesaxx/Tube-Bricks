@@ -36,7 +36,8 @@ Don’t forget to subscribe to my channel.
 This App is a first draft of what I find useful for myself, developed quick and dirty in a couple of hours. It's also my first Mac App as well as my first App written in swift. Therefore it might contain some bugs and doesn't follow best practices. I gave my best since I use the App everyday to generate descriptions of my daily video diary. Nevertheless I can imagine some improvements and additional features. Heres a short list of what I might or might not implement in the near future. Feel free to implement it yourself and send me a pull request:
 * Make everything look more beautiful
 * Implement Undo Manager so accidental delete/changes can be undone
-* Support links and rich text
+* Add default Checkbox to Separator so every Brick added to a Generator gets the default Separator automatically
+* Drag Bricks from a Generator outside of the List to remove them
 * ?
 
 ## Additional Thanks
