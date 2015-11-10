@@ -12,4 +12,5 @@ import RealmSwift
 class Separator: Object {
     dynamic var title: String = ""
     dynamic var text: String = ""
+    dynamic var isDefault: Bool = false
 }

@@ -14,22 +14,23 @@ class WindowController: NSWindowController {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         let config = Realm.Configuration(
-            schemaVersion: 1,
+            schemaVersion: 2,
             migrationBlock: { migration, oldSchemaVersion in
                 migration.enumerate(Brick.className()) { oldObject, newObject in
-                    if (oldSchemaVersion < 1) {
+                    if (oldSchemaVersion < 2) {
                     }
                 }
                 migration.enumerate(Separator.className(),{ (oldObject, newObject) -> Void in
-                    if (oldSchemaVersion < 1) {
+                    if (oldSchemaVersion < 2) {
+                        
                     }
                 })
                 migration.enumerate(Generator.className(),{ (oldObject, newObject) -> Void in
-                    if (oldSchemaVersion < 1) {
+                    if (oldSchemaVersion < 2) {
                     }
                 })
                 migration.enumerate(GeneratorBrick.className(),{ (oldObject, newObject) -> Void in
-                    if (oldSchemaVersion < 1) {
+                    if (oldSchemaVersion < 2) {
                     }
                 })
         })
