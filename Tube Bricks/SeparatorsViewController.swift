@@ -21,6 +21,7 @@ class SeparatorsViewController: NSViewController {
     @IBOutlet weak var saveButton: NSButton!
     @IBOutlet weak var addButton: NSButton!
     @IBOutlet weak var deleteButton: NSButton!
+    @IBOutlet weak var defaultCheckbox: NSButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,19 +38,39 @@ class SeparatorsViewController: NSViewController {
     func updateDetailInfo(data: Separator?) {
         var title = ""
         var text = ""
+        var isDefault = false
         if let separator = data {
             title = separator.title
             text = separator.text
+            isDefault = separator.isDefault
         }
         
         self.textField.stringValue = title
         self.textView.string = text
+        self.defaultCheckbox.state = buttonStateForBool(isDefault)
+        
     }
     
     func reloadRow(row: Int) {
         let indexSet = NSIndexSet(index: row)
         let columnSet = NSIndexSet(index: 0)
         self.tableView.reloadDataForRowIndexes(indexSet, columnIndexes: columnSet)
+    }
+    
+    func isDefaultCheckboxChecked() -> Bool {
+        if self.defaultCheckbox.state == NSOnState {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func buttonStateForBool(value: Bool) -> Int {
+        if value {
+            return NSOnState
+        }else {
+            return NSOffState
+        }
     }
     
 }
@@ -77,11 +98,23 @@ extension SeparatorsViewController{
     @IBAction func saveButtonPressed(sender: AnyObject) {
         if let selectedData = selectedSeparator() {
             let selectedRow = separators.indexOf(selectedData)
+
             let realm = try! Realm()
+            if isDefaultCheckboxChecked() {
+                let defaults = realm.objects(Separator).filter("isDefault = true")
+                try! realm.write{
+                    for defaultSeparator in defaults {
+                        defaultSeparator.isDefault = false
+                    }
+                }
+            }
+            
             try! realm.write{
                 selectedData.title = self.textField.stringValue
                 selectedData.text = self.textView.string!
+                selectedData.isDefault = self.isDefaultCheckboxChecked()
             }
+            
             let newSelectedRow = separators.indexOf(selectedData)
             self.tableView.moveRowAtIndex(selectedRow!, toIndex: newSelectedRow!)
             self.reloadRow(newSelectedRow!)
@@ -161,6 +194,7 @@ extension SeparatorsViewController: NSTableViewDelegate {
         textView.selectable = buttonsEnabled
         deleteButton.enabled = buttonsEnabled
         saveButton.enabled = buttonsEnabled
+        defaultCheckbox.enabled = buttonsEnabled
     }
 }
 

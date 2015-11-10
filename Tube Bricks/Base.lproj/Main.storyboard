@@ -938,7 +938,7 @@ CA
         <!--Tab View Controller-->
         <scene sceneID="gbZ-lD-x1c">
             <objects>
-                <tabViewController selectedTabViewItemIndex="1" id="2nC-vC-3sb" sceneMemberID="viewController">
+                <tabViewController selectedTabViewItemIndex="0" id="2nC-vC-3sb" sceneMemberID="viewController">
                     <tabViewItems>
                         <tabViewItem id="BG4-4f-bum"/>
                         <tabViewItem id="Dgy-ek-cE8"/>
@@ -1657,20 +1657,20 @@ CA
                                 </textFieldCell>
                             </textField>
                             <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BgF-ly-uUq">
-                                <rect key="frame" x="250" y="49" width="212" height="132"/>
+                                <rect key="frame" x="250" y="71" width="212" height="110"/>
                                 <clipView key="contentView" id="RqH-6I-fxo">
-                                    <rect key="frame" x="1" y="1" width="210" height="130"/>
+                                    <rect key="frame" x="1" y="1" width="210" height="108"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView editable="NO" selectable="NO" importsGraphics="NO" richText="NO" findStyle="bar" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="bQi-NQ-EgF" customClass="TBTextView" customModule="Tube_Bricks" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="210" height="130"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="210" height="108"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <animations/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="210" height="130"/>
+                                            <size key="minSize" width="210" height="108"/>
                                             <size key="maxSize" width="463" height="10000000"/>
                                             <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="210" height="130"/>
+                                            <size key="minSize" width="210" height="108"/>
                                             <size key="maxSize" width="463" height="10000000"/>
                                         </textView>
                                     </subviews>
@@ -1687,7 +1687,7 @@ CA
                                     <animations/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="OyD-e9-z7Q">
-                                    <rect key="frame" x="195" y="1" width="16" height="130"/>
+                                    <rect key="frame" x="195" y="1" width="16" height="108"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <animations/>
                                 </scroller>
@@ -1759,10 +1759,19 @@ CA
                                     <action selector="deleteButtonPressed:" target="5ug-Fh-wIM" id="Rfr-xP-1zQ"/>
                                 </connections>
                             </button>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="aPT-K4-LMG">
+                                <rect key="frame" x="248" y="47" width="216" height="18"/>
+                                <animations/>
+                                <buttonCell key="cell" type="check" title="Default" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="YqV-be-hQH">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="Omi-H6-GE6" secondAttribute="bottom" constant="12" id="33p-2H-cVY"/>
                             <constraint firstItem="Omi-H6-GE6" firstAttribute="leading" secondItem="2Ny-4c-ard" secondAttribute="trailing" constant="8" id="7b4-ao-wzb"/>
+                            <constraint firstAttribute="trailing" secondItem="aPT-K4-LMG" secondAttribute="trailing" constant="20" id="AT1-3X-WKo"/>
                             <constraint firstAttribute="trailing" secondItem="klp-8P-h0A" secondAttribute="trailing" constant="20" id="Cqn-oZ-wxU"/>
                             <constraint firstAttribute="trailing" secondItem="BgF-ly-uUq" secondAttribute="trailing" constant="20" id="Dwk-9o-61e"/>
                             <constraint firstItem="BgF-ly-uUq" firstAttribute="leading" secondItem="Omi-H6-GE6" secondAttribute="trailing" constant="8" id="DzG-Px-ggU"/>
@@ -1778,18 +1787,20 @@ CA
                             <constraint firstItem="2Ny-4c-ard" firstAttribute="top" secondItem="c9x-Qe-KaK" secondAttribute="top" constant="20" id="QFt-6v-l1r"/>
                             <constraint firstItem="j4t-1k-BuD" firstAttribute="top" secondItem="2Ny-4c-ard" secondAttribute="bottom" constant="8" id="U0Q-54-LI1"/>
                             <constraint firstItem="klp-8P-h0A" firstAttribute="top" secondItem="h6T-jB-paJ" secondAttribute="bottom" constant="8" id="VKI-um-MZf"/>
+                            <constraint firstItem="5jb-GS-GDa" firstAttribute="top" secondItem="aPT-K4-LMG" secondAttribute="bottom" constant="8" id="VO1-5d-Pjz"/>
                             <constraint firstItem="0yS-pL-mLN" firstAttribute="leading" secondItem="c9x-Qe-KaK" secondAttribute="leading" constant="20" id="XLo-Ff-oqA"/>
                             <constraint firstItem="Omi-H6-GE6" firstAttribute="top" secondItem="c9x-Qe-KaK" secondAttribute="top" constant="12" id="YZy-wB-8fe"/>
                             <constraint firstItem="5jb-GS-GDa" firstAttribute="leading" secondItem="Omi-H6-GE6" secondAttribute="trailing" constant="8" id="Yao-x0-RuD"/>
                             <constraint firstItem="h6T-jB-paJ" firstAttribute="leading" secondItem="Omi-H6-GE6" secondAttribute="trailing" constant="8" id="cxq-yU-ISC"/>
                             <constraint firstAttribute="bottom" secondItem="0yS-pL-mLN" secondAttribute="bottom" constant="20" id="dAo-uy-8rn"/>
+                            <constraint firstItem="aPT-K4-LMG" firstAttribute="leading" secondItem="Omi-H6-GE6" secondAttribute="trailing" constant="8" id="dvT-KO-LK0"/>
+                            <constraint firstItem="aPT-K4-LMG" firstAttribute="top" secondItem="BgF-ly-uUq" secondAttribute="bottom" constant="8" id="eBy-Re-6bL"/>
                             <constraint firstItem="2Ny-4c-ard" firstAttribute="leading" secondItem="c9x-Qe-KaK" secondAttribute="leading" constant="20" id="g0Z-Mi-fzn"/>
                             <constraint firstAttribute="trailing" secondItem="h6T-jB-paJ" secondAttribute="trailing" constant="20" id="gOc-Hj-T8e"/>
                             <constraint firstAttribute="trailing" secondItem="skL-lf-Tka" secondAttribute="trailing" constant="20" id="hd6-2Z-3bM"/>
                             <constraint firstAttribute="trailing" secondItem="5jb-GS-GDa" secondAttribute="trailing" constant="20" id="oqn-Rr-CWV"/>
                             <constraint firstItem="h6T-jB-paJ" firstAttribute="top" secondItem="skL-lf-Tka" secondAttribute="bottom" constant="8" id="phR-9S-BSO"/>
                             <constraint firstItem="0yS-pL-mLN" firstAttribute="top" secondItem="j4t-1k-BuD" secondAttribute="bottom" constant="8" id="qqf-eO-rzY"/>
-                            <constraint firstItem="5jb-GS-GDa" firstAttribute="top" secondItem="BgF-ly-uUq" secondAttribute="bottom" constant="8" id="s2p-Bv-u1T"/>
                             <constraint firstAttribute="bottom" secondItem="5jb-GS-GDa" secondAttribute="bottom" constant="20" id="sOd-qh-wTc"/>
                             <constraint firstItem="BgF-ly-uUq" firstAttribute="top" secondItem="klp-8P-h0A" secondAttribute="bottom" constant="8" id="uSO-A7-Fph"/>
                         </constraints>
@@ -1797,6 +1808,7 @@ CA
                     </view>
                     <connections>
                         <outlet property="addButton" destination="0yS-pL-mLN" id="zEC-BN-5Mc"/>
+                        <outlet property="defaultCheckbox" destination="aPT-K4-LMG" id="8pm-0X-UlC"/>
                         <outlet property="deleteButton" destination="cRW-AX-Mmg" id="aN2-hF-43D"/>
                         <outlet property="saveButton" destination="5jb-GS-GDa" id="DuP-nI-nlu"/>
                         <outlet property="tableView" destination="FCd-GL-10r" id="qQb-lz-dMZ"/>

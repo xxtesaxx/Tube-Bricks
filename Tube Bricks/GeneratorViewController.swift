@@ -160,9 +160,11 @@ extension GeneratorViewController {
         }
         let realm = try! Realm()
         let indexesToInsert = NSMutableIndexSet()
+        let defaultSeparator = realm.objects(Separator).filter("isDefault = true").first
         for brick in bricksToMove {
             let generatorBrick = GeneratorBrick()
             generatorBrick.brick = brick
+            generatorBrick.separator = defaultSeparator
             try! realm.write{
                 realm.add(generatorBrick)
                 self.currentGenerator().generatorBricks.append(generatorBrick)
