@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tube Bricks/GeneratorViewController.swift"
-            timestampString = "468498605.394229"
+            timestampString = "468563967.993002"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "333"
-            endingLineNumber = "333"
+            startingLineNumber = "348"
+            endingLineNumber = "348"
             landmarkName = "tableView(_:viewForTableColumn:row:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,12 +58,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tube Bricks/GeneratorViewController.swift"
-            timestampString = "468498732.56196"
+            timestampString = "468563967.993002"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "453"
-            endingLineNumber = "453"
+            startingLineNumber = "468"
+            endingLineNumber = "468"
             landmarkName = "comboBoxSelectionDidChange(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Tube Bricks/GeneratorViewController.swift"
+            timestampString = "468831146.846322"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "258"
+            endingLineNumber = "258"
+            landmarkName = "textDidChange(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

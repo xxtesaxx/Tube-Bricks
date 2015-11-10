@@ -38,11 +38,10 @@ class BricksViewController: NSViewController {
     func updateDetailInfo(data: Brick?) {
         var title = ""
         var text = ""
-        if let Brick = data {
-            title = Brick.title
-            text = Brick.text
+        if let brick = data {
+            title = brick.title
+            text = brick.text
         }
-        
         self.textField.stringValue = title
         self.textView.string = text
     }

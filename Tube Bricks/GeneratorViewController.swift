@@ -253,9 +253,17 @@ extension GeneratorViewController {
 
 extension GeneratorViewController: NSTextViewDelegate {
     func textDidChange(notification: NSNotification) {
-        try! Realm().write{
-            self.currentGenerator().headerText = self.headerTextView.string!
-            self.currentGenerator().footerText = self.footerTextView.string!
+        if let textView = notification.object {
+            if textView.isEqual(headerTextView){
+                try! Realm().write{
+                    self.currentGenerator().headerText = textView.string!
+                }
+            }
+            if textView.isEqual(footerTextView){
+                try! Realm().write{
+                    self.currentGenerator().footerText = textView.string!
+                }
+            }
         }
     }
 }
