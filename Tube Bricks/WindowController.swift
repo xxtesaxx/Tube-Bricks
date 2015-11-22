@@ -39,8 +39,11 @@ class WindowController: NSWindowController {
     }
     
     override func windowDidLoad() {
+        super.windowDidLoad()
         self.window?.titleVisibility = NSWindowTitleVisibility.Hidden;
         self.window?.titlebarAppearsTransparent = true;
         self.window?.styleMask |= NSFullSizeContentViewWindowMask;
+        self.shouldCascadeWindows = false
+        self.windowFrameAutosaveName = "TubeBricksWindow"
     }
 }

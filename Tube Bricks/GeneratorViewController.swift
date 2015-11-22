@@ -68,10 +68,11 @@ class GeneratorViewController: NSViewController {
         headerTextView.string = currentGenerator().headerText
         footerTextView.string = currentGenerator().footerText
         
-//        generatorTableView.selectRowIndexes(NSIndexSet(index: generators.indexOf(currentGenerator())!), byExtendingSelection: false)
+        if let index = generators.indexOf(currentGenerator()) {
+            generatorTableView.selectRowIndexes(NSIndexSet(index: index), byExtendingSelection: false)
+        }
         
         self.isReloading = false
-        
     }
     
     func updateHeaderFooterSeparator(generator: Generator){
@@ -277,13 +278,15 @@ extension GeneratorViewController: NSTableViewDelegate {
     @IBAction func endEditingText(sender: AnyObject){
         let textField = sender as! NSTextField
         let index = generatorTableView.rowForView(textField)
-        let generator = generators[index]
-        try! Realm().write{
-            generator.title = textField.stringValue
-        }
-        if let newIndex = generators.indexOf(generator) {
-            if index != newIndex {
-                generatorTableView.moveRowAtIndex(index, toIndex: newIndex)
+        if index >= 0 {
+            let generator = generators[index]
+            try! Realm().write{
+                generator.title = textField.stringValue
+            }
+            if let newIndex = generators.indexOf(generator) {
+                if index != newIndex {
+                    generatorTableView.moveRowAtIndex(index, toIndex: newIndex)
+                }
             }
         }
     }
@@ -309,10 +312,10 @@ extension GeneratorViewController: NSTableViewDelegate {
                         }
                         newDefaultGenerator.isDefault = true
                     }
-                    updateUI(self)
                 }
                 let buttonsEnabled = (tableView.selectedRowIndexes.count > 0 && tableView.numberOfRows > 1)
                 deleteGeneratorButton.enabled = buttonsEnabled
+                updateUI(self)
             }
         }
     }
