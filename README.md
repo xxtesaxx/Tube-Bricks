@@ -1,5 +1,5 @@
 # Tube-Bricks
-Tube Bricks is a simple to use text generator for YouTube. Add text bricks, separators and start mixing them to create the desciption for your next YouTube video.
+Tube Bricks is a simple to use YouTube Description Generator. Add text bricks, separators and start mixing them to create the desciption for your next YouTube video.
 
 ## Bricks
 Bricks are one of the main components of this App. Every Brick has a title and the text itself. Titels are used to organise and find your bricks. The list on the left side is searchable so you can find and edit a specific brick quicker. The text of the brick is used to generate the description in the Generator tab.
