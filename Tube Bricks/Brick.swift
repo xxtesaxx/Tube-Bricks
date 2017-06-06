@@ -12,8 +12,8 @@ import RealmSwift
 class Brick: Object {
     dynamic var title: String = ""
     dynamic var text: String = ""
-    var generatorBricks: [GeneratorBrick] {
-        return linkingObjects(GeneratorBrick.self, forProperty: "brick")
+    var generatorBricks: LinkingObjects<GeneratorBrick> {
+        return LinkingObjects(fromType: GeneratorBrick.self, property: "brick")
     }
 }
 

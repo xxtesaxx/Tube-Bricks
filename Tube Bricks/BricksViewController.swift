@@ -10,8 +10,8 @@ import Cocoa
 import RealmSwift
 
 class BricksViewController: NSViewController {
-    var allBricks: Results<Brick> = try! Realm().objects(Brick).sorted("title")
-    var bricks: Results<Brick> = try! Realm().objects(Brick).sorted("title")
+    var allBricks: Results<Brick> = try! Realm().objects(Brick.self).sorted(byKeyPath: "title")
+    var bricks: Results<Brick> = try! Realm().objects(Brick.self).sorted(byKeyPath: "title")
     
     var dataFilePath: String?
     
@@ -76,14 +76,14 @@ extension BricksViewController{
     
     @IBAction func saveButtonPressed(_ sender: AnyObject) {
         if let selectedData = selectedBrick() {
-            let selectedRow = bricks.indexOf(selectedData)
+            let selectedRow = bricks.index(of: selectedData)
             let realm = try! Realm()
             try! realm.write{
                 selectedData.title = self.textField.stringValue
                 selectedData.text = self.textView.string!
             }
-            let newSelectedRow = bricks.indexOf(selectedData)
-            self.tableView.moveRowAtIndex(selectedRow!, toIndex: newSelectedRow!)
+            let newSelectedRow = bricks.index(of: selectedData)
+            self.tableView.moveRow(at: selectedRow!, to: newSelectedRow!)
             self.reloadBrickRow(newSelectedRow!)
         }
         sendAddDeleteNotification()
@@ -94,9 +94,9 @@ extension BricksViewController{
         let realm = try! Realm()
         try! realm.write{
             realm.add(newData)
-            if let newRowIndex = self.bricks.indexOf(newData){
-                self.tableView.insertRowsAtIndexes(NSIndexSet(index: newRowIndex), withAnimation: NSTableViewAnimationOptions.EffectFade)
-                self.tableView.selectRowIndexes(NSIndexSet(index: newRowIndex), byExtendingSelection:false)
+            if let newRowIndex = self.bricks.index(of: newData){
+                self.tableView.insertRows(at: IndexSet(integer: newRowIndex), withAnimation: .effectFade)
+                self.tableView.selectRowIndexes(IndexSet(integer: newRowIndex), byExtendingSelection:false)
                 self.tableView.scrollRowToVisible(newRowIndex)
             }
         }
@@ -106,14 +106,13 @@ extension BricksViewController{
     @IBAction func removeButtonPressed(_ sender: AnyObject){
         if let selectedBrick = selectedBrick() {
             let realm = try! Realm()
-            let generatorBricks = realm.objects(GeneratorBrick).filter("brick = %a", selectedBrick)
+            let generatorBricks = realm.objects(GeneratorBrick.self).filter("brick = %a", selectedBrick)
             try! realm.write{
                 for generatorBrick in generatorBricks {
                     realm.delete(generatorBrick)
                 }
                 realm.delete(selectedBrick)
-                self.tableView.removeRowsAtIndexes(NSIndexSet(index:self.tableView.selectedRow),
-                    withAnimation: NSTableViewAnimationOptions.EffectFade)
+                self.tableView.removeRows(at: IndexSet(integer: tableView.selectedRow), withAnimation: .effectFade)
                 self.updateDetailInfo(nil)
             }
             sendAddDeleteNotification()
@@ -150,9 +149,9 @@ extension BricksViewController: NSTableViewDelegate {
             try! Realm().write{
                 brick.title = textField.stringValue
             }
-            if let newIndex = bricks.indexOf(brick) {
+            if let newIndex = bricks.index(of: brick) {
                 if index != newIndex {
-                    tableView.moveRowAtIndex(index, toIndex: newIndex)
+                    tableView.moveRow(at: index, to: newIndex)
                 }
             }
             updateDetailInfo(brick)

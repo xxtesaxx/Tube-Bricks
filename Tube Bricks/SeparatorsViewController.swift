@@ -10,8 +10,8 @@ import Cocoa
 import RealmSwift
 
 class SeparatorsViewController: NSViewController {
-    var allSeparators: Results<Separator> = try! Realm().objects(Separator).sorted("title")
-    var separators: Results<Separator> = try! Realm().objects(Separator).sorted("title")
+    var allSeparators: Results<Separator> = try! Realm().objects(Separator.self).sorted(byKeyPath: "title")
+    var separators: Results<Separator> = try! Realm().objects(Separator.self).sorted(byKeyPath: "title")
     var generator: Generator?
     var dataFilePath: String?
     
@@ -97,11 +97,11 @@ extension SeparatorsViewController{
     
     @IBAction func saveButtonPressed(_ sender: AnyObject) {
         if let selectedData = selectedSeparator() {
-            let selectedRow = separators.indexOf(selectedData)
+            let selectedRow = separators.index(of: selectedData)
 
             let realm = try! Realm()
             if isDefaultCheckboxChecked() {
-                let defaults = realm.objects(Separator).filter("isDefault = true")
+                let defaults = realm.objects(Separator.self).filter("isDefault = true")
                 try! realm.write{
                     for defaultSeparator in defaults {
                         defaultSeparator.isDefault = false
@@ -115,8 +115,8 @@ extension SeparatorsViewController{
                 selectedData.isDefault = self.isDefaultCheckboxChecked()
             }
             
-            let newSelectedRow = separators.indexOf(selectedData)
-            self.tableView.moveRowAtIndex(selectedRow!, toIndex: newSelectedRow!)
+            let newSelectedRow = separators.index(of: selectedData)
+            self.tableView.moveRow(at: selectedRow!, to: newSelectedRow!)
             self.reloadRow(newSelectedRow!)
         }
         sendAddDeleteNotification()
@@ -127,9 +127,9 @@ extension SeparatorsViewController{
         let realm = try! Realm()
         try! realm.write{
             realm.add(newData)
-            if let newRowIndex = self.separators.indexOf(newData){
-                self.tableView.insertRowsAtIndexes(NSIndexSet(index: newRowIndex), withAnimation: NSTableViewAnimationOptions.EffectFade)
-                self.tableView.selectRowIndexes(NSIndexSet(index: newRowIndex), byExtendingSelection:false)
+            if let newRowIndex = self.separators.index(of: newData){
+                self.tableView.insertRows(at: IndexSet(integer: newRowIndex), withAnimation: .effectFade)
+                self.tableView.selectRowIndexes(IndexSet(integer: newRowIndex), byExtendingSelection:false)
                 self.tableView.scrollRowToVisible(newRowIndex)
             }
         }
@@ -140,9 +140,8 @@ extension SeparatorsViewController{
             let realm = try! Realm()
             try! realm.write{
                 realm.delete(selectedSeparator)
-                self.tableView.removeRowsAtIndexes(NSIndexSet(index:self.tableView.selectedRow),
-                    withAnimation: NSTableViewAnimationOptions.EffectFade)
-                self.updateDetailInfo(nil)
+                tableView.removeRows(at: IndexSet(integer: tableView.selectedRow), withAnimation: .effectFade)
+                updateDetailInfo(nil)
             }
             sendAddDeleteNotification()
         }
@@ -177,9 +176,9 @@ extension SeparatorsViewController: NSTableViewDelegate {
             try! Realm().write{
                 separator.title = textField.stringValue
             }
-            if let newIndex = separators.indexOf(separator) {
+            if let newIndex = separators.index(of: separator) {
                 if index != newIndex {
-                    tableView.moveRowAtIndex(index, toIndex: newIndex)
+                    tableView.moveRow(at: index, to: newIndex)
                 }
             }
             updateDetailInfo(separator)

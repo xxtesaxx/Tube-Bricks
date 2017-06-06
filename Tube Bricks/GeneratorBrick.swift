@@ -12,7 +12,7 @@ import RealmSwift
 class GeneratorBrick: Object {
     dynamic var brick: Brick?
     dynamic var separator: Separator?
-    var generator: [Generator] {
-        return linkingObjects(Generator.self, forProperty: "generatorBricks")
+    var generator: LinkingObjects<Generator> {
+        return LinkingObjects(fromType: Generator.self, property: "generatorBricks")
     }
 }

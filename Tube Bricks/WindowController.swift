@@ -16,20 +16,21 @@ class WindowController: NSWindowController {
         let config = Realm.Configuration(
             schemaVersion: 2,
             migrationBlock: { migration, oldSchemaVersion in
-                migration.enumerate(Brick.className()) { oldObject, newObject in
+                migration.enumerateObjects(ofType: Brick.className()) { oldObject, newObject in
                     if (oldSchemaVersion < 2) {
+                        
                     }
                 }
-                migration.enumerate(Separator.className(),{ (oldObject, newObject) -> Void in
+                migration.enumerateObjects(ofType: Separator.className(),{ (oldObject, newObject) -> Void in
                     if (oldSchemaVersion < 2) {
                         
                     }
                 })
-                migration.enumerate(Generator.className(),{ (oldObject, newObject) -> Void in
+                migration.enumerateObjects(ofType: Generator.className(),{ (oldObject, newObject) -> Void in
                     if (oldSchemaVersion < 2) {
                     }
                 })
-                migration.enumerate(GeneratorBrick.className(),{ (oldObject, newObject) -> Void in
+                migration.enumerateObjects(ofType: GeneratorBrick.className(),{ (oldObject, newObject) -> Void in
                     if (oldSchemaVersion < 2) {
                     }
                 })
@@ -42,7 +43,7 @@ class WindowController: NSWindowController {
         super.windowDidLoad()
         self.window?.titleVisibility = NSWindowTitleVisibility.hidden;
         self.window?.titlebarAppearsTransparent = true;
-        self.window?.styleMask |= NSFullSizeContentViewWindowMask;
+        self.window?.styleMask.insert(.fullSizeContentView)
         self.shouldCascadeWindows = false
         self.windowFrameAutosaveName = "TubeBricksWindow"
     }
