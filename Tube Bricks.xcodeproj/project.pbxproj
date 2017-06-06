@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1CBB1AB9AACA6CAAE57B6196 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6802A3628AC2DA0933E11F80 /* Pods.framework */; };
 		5E2459591BE32B9F00AF322B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2459581BE32B9F00AF322B /* CoreData.framework */; };
 		5E2DDB391BE9C8A100A45A8D /* SeparatorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2DDB381BE9C8A100A45A8D /* SeparatorsViewController.swift */; };
 		5E2DDB3B1BE9C95300A45A8D /* Separator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2DDB3A1BE9C95300A45A8D /* Separator.swift */; };
@@ -38,7 +37,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5C355C697C1B66BB7E0D4347 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		5E2459571BE32A4400AF322B /* Tube_Bricks_Bridging_Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tube_Bricks_Bridging_Header.h; sourceTree = "<group>"; };
 		5E2459581BE32B9F00AF322B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		5E2DDB381BE9C8A100A45A8D /* SeparatorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeparatorsViewController.swift; sourceTree = "<group>"; };
@@ -57,7 +55,6 @@
 		5EDA64171BE25654002D0C8D /* WindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
 		5EDA64191BE26351002D0C8D /* GeneratorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratorViewController.swift; sourceTree = "<group>"; };
 		6802A3628AC2DA0933E11F80 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6843FD1798E41E3842D5A9FC /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,22 +63,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E2459591BE32B9F00AF322B /* CoreData.framework in Frameworks */,
-				1CBB1AB9AACA6CAAE57B6196 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3F039914D64E605E4BF36267 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				5C355C697C1B66BB7E0D4347 /* Pods.debug.xcconfig */,
-				6843FD1798E41E3842D5A9FC /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		5E2459541BE329FB00AF322B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -96,7 +83,6 @@
 			children = (
 				5EDA63FE1BE1E802002D0C8D /* Tube Bricks */,
 				5EDA63FD1BE1E802002D0C8D /* Products */,
-				3F039914D64E605E4BF36267 /* Pods */,
 				CADB42AFF32BE5AAF7BDE3B2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -154,13 +140,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5EDA640B1BE1E803002D0C8D /* Build configuration list for PBXNativeTarget "Tube Bricks" */;
 			buildPhases = (
-				657360CB05A5D595849C7EAF /* Check Pods Manifest.lock */,
 				5EDA63F81BE1E802002D0C8D /* Sources */,
 				5EDA63F91BE1E802002D0C8D /* Frameworks */,
 				5EDA63FA1BE1E802002D0C8D /* Resources */,
 				5E2459711BE462FA00AF322B /* Embed Frameworks */,
-				B679A27F535CB50222A9787B /* Embed Pods Frameworks */,
-				6F693E8BA1CE3F729D7F40DE /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -183,6 +166,7 @@
 				TargetAttributes = {
 					5EDA63FB1BE1E802002D0C8D = {
 						CreatedOnToolsVersion = 7.1;
+						LastSwiftMigration = 0830;
 					};
 				};
 			};
@@ -215,54 +199,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		657360CB05A5D595849C7EAF /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		6F693E8BA1CE3F729D7F40DE /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B679A27F535CB50222A9787B /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5EDA63F81BE1E802002D0C8D /* Sources */ = {
@@ -379,7 +315,6 @@
 		};
 		5EDA640C1BE1E803002D0C8D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5C355C697C1B66BB7E0D4347 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -392,12 +327,12 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "jan.le.mann.Tube-Bricks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		5EDA640D1BE1E803002D0C8D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6843FD1798E41E3842D5A9FC /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -410,6 +345,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "jan.le.mann.Tube-Bricks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

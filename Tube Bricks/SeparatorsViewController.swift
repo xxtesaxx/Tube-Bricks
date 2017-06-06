@@ -35,7 +35,7 @@ class SeparatorsViewController: NSViewController {
         return nil
     }
     
-    func updateDetailInfo(data: Separator?) {
+    func updateDetailInfo(_ data: Separator?) {
         var title = ""
         var text = ""
         var isDefault = false
@@ -51,10 +51,10 @@ class SeparatorsViewController: NSViewController {
         
     }
     
-    func reloadRow(row: Int) {
-        let indexSet = NSIndexSet(index: row)
-        let columnSet = NSIndexSet(index: 0)
-        self.tableView.reloadDataForRowIndexes(indexSet, columnIndexes: columnSet)
+    func reloadRow(_ row: Int) {
+        let indexSet = IndexSet(integer: row)
+        let columnSet = IndexSet(integer: 0)
+        self.tableView.reloadData(forRowIndexes: indexSet, columnIndexes: columnSet)
     }
     
     func isDefaultCheckboxChecked() -> Bool {
@@ -65,7 +65,7 @@ class SeparatorsViewController: NSViewController {
         }
     }
     
-    func buttonStateForBool(value: Bool) -> Int {
+    func buttonStateForBool(_ value: Bool) -> Int {
         if value {
             return NSOnState
         }else {
@@ -79,10 +79,10 @@ class SeparatorsViewController: NSViewController {
 extension SeparatorsViewController{
     
     func sendAddDeleteNotification(){
-        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "AddDelete", object: nil))
+        NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: "AddDelete"), object: nil))
     }
     
-    @IBAction func search(sender: AnyObject) {
+    @IBAction func search(_ sender: AnyObject) {
         let searchField = sender as! NSSearchField
         tableView.deselectRow(tableView.selectedRow)
         if searchField.stringValue.isEmpty {
@@ -95,7 +95,7 @@ extension SeparatorsViewController{
         
     }
     
-    @IBAction func saveButtonPressed(sender: AnyObject) {
+    @IBAction func saveButtonPressed(_ sender: AnyObject) {
         if let selectedData = selectedSeparator() {
             let selectedRow = separators.indexOf(selectedData)
 
@@ -122,7 +122,7 @@ extension SeparatorsViewController{
         sendAddDeleteNotification()
     }
     
-    @IBAction func addButtonPressed(sender: AnyObject) {
+    @IBAction func addButtonPressed(_ sender: AnyObject) {
         let newData = Separator(value: ["title": "New Separator", "text": ""])
         let realm = try! Realm()
         try! realm.write{
@@ -135,7 +135,7 @@ extension SeparatorsViewController{
         }
         sendAddDeleteNotification()
     }
-    @IBAction func deleteButtonPressed(sender: AnyObject) {
+    @IBAction func deleteButtonPressed(_ sender: AnyObject) {
         if let selectedSeparator = selectedSeparator() {
             let realm = try! Realm()
             try! realm.write{
@@ -151,13 +151,13 @@ extension SeparatorsViewController{
 
 // MARK: - NSTableViewDataSource
 extension SeparatorsViewController: NSTableViewDataSource {
-    func numberOfRowsInTableView(aTableView: NSTableView) -> Int {
+    func numberOfRows(in aTableView: NSTableView) -> Int {
         return Int(self.separators.count)
     }
     
-    func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         
-        let cellView: NSTableCellView = tableView.makeViewWithIdentifier(tableColumn!.identifier, owner: self) as! NSTableCellView
+        let cellView: NSTableCellView = tableView.make(withIdentifier: tableColumn!.identifier, owner: self) as! NSTableCellView
         
         let sep = self.separators[row]
         cellView.textField!.stringValue = sep.title
@@ -169,9 +169,9 @@ extension SeparatorsViewController: NSTableViewDataSource {
 // MARK: - NSTableViewDelegate
 extension SeparatorsViewController: NSTableViewDelegate {
     
-    @IBAction func endEditingText(sender: AnyObject){
+    @IBAction func endEditingText(_ sender: AnyObject){
         let textField = sender as! NSTextField
-        let index = tableView.rowForView(textField)
+        let index = tableView.row(for: textField)
         if index >= 0 {
             let separator = separators[index]
             try! Realm().write{
@@ -187,16 +187,16 @@ extension SeparatorsViewController: NSTableViewDelegate {
         }
     }
     
-    func tableViewSelectionDidChange(notification: NSNotification) {
+    func tableViewSelectionDidChange(_ notification: Notification) {
         let selectedData = selectedSeparator()
         updateDetailInfo(selectedData)
         let buttonsEnabled = (selectedData != nil)
-        textField.enabled = buttonsEnabled
-        textView.editable = buttonsEnabled
-        textView.selectable = buttonsEnabled
-        deleteButton.enabled = buttonsEnabled
-        saveButton.enabled = buttonsEnabled
-        defaultCheckbox.enabled = buttonsEnabled
+        textField.isEnabled = buttonsEnabled
+        textView.isEditable = buttonsEnabled
+        textView.isSelectable = buttonsEnabled
+        deleteButton.isEnabled = buttonsEnabled
+        saveButton.isEnabled = buttonsEnabled
+        defaultCheckbox.isEnabled = buttonsEnabled
     }
 }
 

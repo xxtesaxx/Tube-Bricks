@@ -37,12 +37,12 @@ class GeneratorViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUI:", name: "AddDelete", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(GeneratorViewController.updateUI(_:)), name: NSNotification.Name(rawValue: "AddDelete"), object: nil)
         
         updateUI(self)
         
-        bricksDestinationTableView.registerForDraggedTypes(["jan.le.mann.generatorbricks"])
-        bricksDestinationTableView.registerForDraggedTypes(["jan.le.mann.bricks"])
+        bricksDestinationTableView.register(forDraggedTypes: ["jan.le.mann.generatorbricks"])
+        bricksDestinationTableView.register(forDraggedTypes: ["jan.le.mann.bricks"])
     }
     
     func currentGenerator() -> Generator {
@@ -58,7 +58,7 @@ class GeneratorViewController: NSViewController {
         return newObj
     }
     
-    func updateUI(sender: AnyObject){
+    func updateUI(_ sender: AnyObject){
         self.isReloading = true
         bricksSourceTableView.deselectAll(self)
         bricksSourceTableView.reloadData()
@@ -69,15 +69,15 @@ class GeneratorViewController: NSViewController {
         footerTextView.string = currentGenerator().footerText
         
         if let index = generators.indexOf(currentGenerator()) {
-            generatorTableView.selectRowIndexes(NSIndexSet(index: index), byExtendingSelection: false)
+            generatorTableView.selectRowIndexes(IndexSet(index: index), byExtendingSelection: false)
         }
         
         self.isReloading = false
     }
     
-    func updateHeaderFooterSeparator(generator: Generator){
+    func updateHeaderFooterSeparator(_ generator: Generator){
         headerSeparatorComboBox.removeAllItems()
-        headerSeparatorComboBox.addItemWithObjectValue("None")
+        headerSeparatorComboBox.addItem(withObjectValue: "None")
         for (_, value) in separators.enumerate() {
             headerSeparatorComboBox.addItemWithObjectValue(value.title)
         }
@@ -85,11 +85,11 @@ class GeneratorViewController: NSViewController {
             let index = separators.indexOf(headerSeparator)! + 1
             headerSeparatorComboBox.selectItemAtIndex(index)
         }else {
-            headerSeparatorComboBox.selectItemAtIndex(0)
+            headerSeparatorComboBox.selectItem(at: 0)
         }
         
         footerSeparatorComboBox.removeAllItems()
-        footerSeparatorComboBox.addItemWithObjectValue("None")
+        footerSeparatorComboBox.addItem(withObjectValue: "None")
         for (_, value) in separators.enumerate() {
             footerSeparatorComboBox.addItemWithObjectValue(value.title)
         }
@@ -98,7 +98,7 @@ class GeneratorViewController: NSViewController {
             let index = separators.indexOf(footerSeparator)! + 1
             footerSeparatorComboBox.selectItemAtIndex(index)
         }else {
-            footerSeparatorComboBox.selectItemAtIndex(0)
+            footerSeparatorComboBox.selectItem(at: 0)
         }
     }
 }
@@ -107,7 +107,7 @@ class GeneratorViewController: NSViewController {
 
 extension GeneratorViewController {
 
-    @IBAction func addGeneratorButton(sender: AnyObject) {
+    @IBAction func addGeneratorButton(_ sender: AnyObject) {
         let realm = try! Realm()
         let generator = Generator()
         generator.title = "New"
@@ -115,20 +115,20 @@ extension GeneratorViewController {
             realm.add(generator)
         }
         if let newRowIndex = self.generators.indexOf(generator){
-            self.generatorTableView.insertRowsAtIndexes(NSIndexSet(index: newRowIndex), withAnimation: NSTableViewAnimationOptions.EffectFade)
-            self.generatorTableView.selectRowIndexes(NSIndexSet(index: newRowIndex), byExtendingSelection:false)
+            self.generatorTableView.insertRowsAtIndexes(IndexSet(index: newRowIndex), withAnimation: NSTableViewAnimationOptions.EffectFade)
+            self.generatorTableView.selectRowIndexes(IndexSet(index: newRowIndex), byExtendingSelection:false)
             self.generatorTableView.scrollRowToVisible(newRowIndex)
         }
     }
     
-    @IBAction func removeGeneratorButton(sender: AnyObject) {
+    @IBAction func removeGeneratorButton(_ sender: AnyObject) {
         if generators.count < 2 {
             return
         }
         
         let realm = try! Realm()
         let generator = self.currentGenerator()
-        generatorTableView.removeRowsAtIndexes(generatorTableView.selectedRowIndexes, withAnimation: NSTableViewAnimationOptions.EffectFade)
+        generatorTableView.removeRows(at: generatorTableView.selectedRowIndexes, withAnimation: NSTableViewAnimationOptions.effectFade)
         try! realm.write{
             for generatorBrick in generator.generatorBricks {
                 realm.delete(generatorBrick)
@@ -141,7 +141,7 @@ extension GeneratorViewController {
         updateUI(self)
     }
     
-    @IBAction func search(sender: AnyObject) {
+    @IBAction func search(_ sender: AnyObject) {
         let searchField = sender as! NSSearchField
         bricksSourceTableView.deselectAll(bricksSourceTableView)
         if searchField.stringValue.isEmpty {
@@ -154,7 +154,7 @@ extension GeneratorViewController {
     }
     
     
-    @IBAction func addButton(sender: AnyObject) {
+    @IBAction func addButton(_ sender: AnyObject) {
         var bricksToMove = [Brick]()
         for index in bricksSourceTableView.selectedRowIndexes {
             bricksToMove.append(sourceBricks[index])
@@ -175,12 +175,12 @@ extension GeneratorViewController {
             }
         }
 
-        bricksDestinationTableView.insertRowsAtIndexes(indexesToInsert, withAnimation: NSTableViewAnimationOptions.EffectFade)
+        bricksDestinationTableView.insertRows(at: indexesToInsert as IndexSet, withAnimation: NSTableViewAnimationOptions.effectFade)
         
-        self.bricksDestinationTableView.scrollRowToVisible(indexesToInsert.maxElement()!)
+        self.bricksDestinationTableView.scrollRowToVisible(indexesToInsert.max()!)
     }
 
-    @IBAction func removeButton(sender: AnyObject) {
+    @IBAction func removeButton(_ sender: AnyObject) {
         var bricksToMove = [Brick]()
         var generatorBricksToMove = [GeneratorBrick]()
         for index in bricksDestinationTableView.selectedRowIndexes {
@@ -202,33 +202,33 @@ extension GeneratorViewController {
                 indexesToInsert.addIndex(index)
             }
         }
-        bricksDestinationTableView.removeRowsAtIndexes(bricksDestinationTableView.selectedRowIndexes, withAnimation: NSTableViewAnimationOptions.EffectFade)
+        bricksDestinationTableView.removeRows(at: bricksDestinationTableView.selectedRowIndexes, withAnimation: NSTableViewAnimationOptions.effectFade)
 
     }
     
-    @IBAction func moveUpButton(sender: AnyObject) {
+    @IBAction func moveUpButton(_ sender: AnyObject) {
         for index in bricksDestinationTableView.selectedRowIndexes {
             if index > 0 && index < currentGenerator().generatorBricks.count {
                 try! Realm().write{
                     self.currentGenerator().generatorBricks.move(from: index, to: index-1)
                 }
-                bricksDestinationTableView.moveRowAtIndex(index, toIndex: index - 1)
+                bricksDestinationTableView.moveRow(at: index, to: index - 1)
             }
         }
     }
     
-    @IBAction func moveDownButton(sender: AnyObject) {
-        for index in bricksDestinationTableView.selectedRowIndexes.reverse() {
+    @IBAction func moveDownButton(_ sender: AnyObject) {
+        for index in bricksDestinationTableView.selectedRowIndexes.reversed() {
             if index >= 0 && index < currentGenerator().generatorBricks.count-1 {
                 try! Realm().write{
                     self.currentGenerator().generatorBricks.move(from: index, to: index + 1)
                 }
-                bricksDestinationTableView.moveRowAtIndex(index, toIndex: index + 1)
+                bricksDestinationTableView.moveRow(at: index, to: index + 1)
             }
         }
     }
     
-    @IBAction func generateButton(sender: AnyObject) {
+    @IBAction func generateButton(_ sender: AnyObject) {
         var string = String()
         string += headerTextView.string!
         if let separator = currentGenerator().headerSeparator {
@@ -246,23 +246,23 @@ extension GeneratorViewController {
             string += separator.text
         }
         string += footerTextView.string!
-        let pasteboard = NSPasteboard.generalPasteboard()
+        let pasteboard = NSPasteboard.general()
         pasteboard.clearContents()
-        pasteboard.writeObjects([string])
+        pasteboard.writeObjects([string as NSPasteboardWriting])
     }
 }
 
 // MARK: - NSTextViewDelegate
 
 extension GeneratorViewController: NSTextViewDelegate {
-    func textDidChange(notification: NSNotification) {
+    func textDidChange(_ notification: Notification) {
         if let textView = notification.object {
-            if textView.isEqual(headerTextView){
+            if (textView as AnyObject).isEqual(headerTextView){
                 try! Realm().write{
                     self.currentGenerator().headerText = textView.string!
                 }
             }
-            if textView.isEqual(footerTextView){
+            if (textView as AnyObject).isEqual(footerTextView){
                 try! Realm().write{
                     self.currentGenerator().footerText = textView.string!
                 }
@@ -275,9 +275,9 @@ extension GeneratorViewController: NSTextViewDelegate {
 
 extension GeneratorViewController: NSTableViewDelegate {
 
-    @IBAction func endEditingText(sender: AnyObject){
+    @IBAction func endEditingText(_ sender: AnyObject){
         let textField = sender as! NSTextField
-        let index = generatorTableView.rowForView(textField)
+        let index = generatorTableView.row(for: textField)
         if index >= 0 {
             let generator = generators[index]
             try! Realm().write{
@@ -291,19 +291,19 @@ extension GeneratorViewController: NSTableViewDelegate {
         }
     }
     
-    func tableViewSelectionDidChange(notification: NSNotification) {
+    func tableViewSelectionDidChange(_ notification: Notification) {
         if let tableView = notification.object {
-            if tableView.isEqual(bricksDestinationTableView){
-                let buttonsEnabled = (tableView.selectedRowIndexes.count > 0)
-                removeButton.enabled = buttonsEnabled
-                moveUpButton.enabled = buttonsEnabled
-                moveDownButton.enabled = buttonsEnabled
+            if (tableView as AnyObject).isEqual(bricksDestinationTableView){
+                let buttonsEnabled = ((tableView as AnyObject).selectedRowIndexes.count > 0)
+                removeButton.isEnabled = buttonsEnabled
+                moveUpButton.isEnabled = buttonsEnabled
+                moveDownButton.isEnabled = buttonsEnabled
             }
-            if tableView.isEqual(bricksSourceTableView){
-                addButton.enabled = (tableView.selectedRowIndexes.count > 0)
+            if (tableView as AnyObject).isEqual(bricksSourceTableView){
+                addButton.isEnabled = ((tableView as AnyObject).selectedRowIndexes.count > 0)
             }
-            if tableView.isEqual(generatorTableView){
-                if tableView.selectedRowIndexes.count > 0 {
+            if (tableView as AnyObject).isEqual(generatorTableView){
+                if (tableView as AnyObject).selectedRowIndexes.count > 0 {
                     let generators = try! Realm().objects(Generator).filter("isDefault = true")
                     let newDefaultGenerator = self.generators[tableView.selectedRow]
                     try! Realm().write{
@@ -313,8 +313,8 @@ extension GeneratorViewController: NSTableViewDelegate {
                         newDefaultGenerator.isDefault = true
                     }
                 }
-                let buttonsEnabled = (tableView.selectedRowIndexes.count > 0 && tableView.numberOfRows > 1)
-                deleteGeneratorButton.enabled = buttonsEnabled
+                let buttonsEnabled = ((tableView as AnyObject).selectedRowIndexes.count > 0 && (tableView as AnyObject).numberOfRows > 1)
+                deleteGeneratorButton.isEnabled = buttonsEnabled
                 updateUI(self)
             }
         }
@@ -324,7 +324,7 @@ extension GeneratorViewController: NSTableViewDelegate {
 // MARK: - NSTableViewDataSource
 
 extension GeneratorViewController: NSTableViewDataSource {
-    func numberOfRowsInTableView(aTableView: NSTableView) -> Int {
+    func numberOfRows(in aTableView: NSTableView) -> Int {
         if aTableView.isEqual(bricksSourceTableView) {
             return self.sourceBricks.count
         }
@@ -337,9 +337,9 @@ extension GeneratorViewController: NSTableViewDataSource {
         return 0
     }
     
-    func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         
-        let cellView = tableView.makeViewWithIdentifier(tableColumn!.identifier, owner: self)
+        let cellView = tableView.make(withIdentifier: tableColumn!.identifier, owner: self)
         
         if tableView.isEqual(bricksSourceTableView) {
             let brick = self.sourceBricks[row]
@@ -351,8 +351,8 @@ extension GeneratorViewController: NSTableViewDataSource {
             }
             //Combobox für Separators mit daten füllen
             let cb = (cellView as! GeneratorDestinationTableCellView).comboBox
-            cb.removeAllItems()
-            cb.addItemWithObjectValue("None")
+            cb?.removeAllItems()
+            cb?.addItem(withObjectValue: "None")
             for separator in separators {
                 cb.addItemWithObjectValue(separator.title)
             }
@@ -362,7 +362,7 @@ extension GeneratorViewController: NSTableViewDataSource {
                     cb.selectItemAtIndex(index + 1)
                 }
             } else {
-                cb.selectItemAtIndex(0)
+                cb?.selectItem(at: 0)
             }
         }
         if tableView.isEqual(generatorTableView) {
@@ -374,7 +374,7 @@ extension GeneratorViewController: NSTableViewDataSource {
     
     
     
-    func tableView(tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
+    func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
         if tableView.isEqual(bricksDestinationTableView){
             let item = NSPasteboardItem()
             item.setString(String(row), forType: "jan.le.mann.generatorbricks")
@@ -388,28 +388,28 @@ extension GeneratorViewController: NSTableViewDataSource {
         return nil
     }
     
-    func tableView(tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
+    func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
         if tableView.isEqual(bricksDestinationTableView){
-            if dropOperation == .Above {
-                return .Move
+            if dropOperation == .above {
+                return .move
             }
         }
-        return .None
+        return NSDragOperation()
     }
     
-    func tableView(tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
+    func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
         
         if tableView.isEqual(bricksDestinationTableView){
             var oldIndexes = [Int]()
             var newIndexes = [Int]()
-            info.enumerateDraggingItemsWithOptions(.ClearNonenumeratedImages, forView: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) {
+            info.enumerateDraggingItems(options: .clearNonenumeratedImages, for: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) {
                 if let item = ($0.0.item as? NSPasteboardItem) {
-                    if let index = item.stringForType("jan.le.mann.generatorbricks") {
+                    if let index = item.string(forType: "jan.le.mann.generatorbricks") {
                         if let indexInt = Int(index) {
                             oldIndexes.append(indexInt)
                         }
                     }
-                    if let index = item.stringForType("jan.le.mann.bricks") {
+                    if let index = item.string(forType: "jan.le.mann.bricks") {
                         if let indexInt = Int(index) {
                             newIndexes.append(indexInt)
                         }
@@ -428,18 +428,18 @@ extension GeneratorViewController: NSTableViewDataSource {
                     try! Realm().write{
                         generator.generatorBricks.move(from: oldIndex + oldIndexOffset, to: row - 1)
                     }
-                    tableView.moveRowAtIndex(oldIndex + oldIndexOffset, toIndex: row - 1)
-                    --oldIndexOffset
+                    tableView.moveRow(at: oldIndex + oldIndexOffset, to: row - 1)
+                    oldIndexOffset -= 1
                 } else {
                     try! realm.write{
                         generator.generatorBricks.move(from: oldIndex, to: row + newIndexOffset)
                     }
-                    tableView.moveRowAtIndex(oldIndex, toIndex: row + newIndexOffset)
-                    ++newIndexOffset
+                    tableView.moveRow(at: oldIndex, to: row + newIndexOffset)
+                    newIndexOffset += 1
                 }
             }
             
-            for newIndex in newIndexes.reverse() {
+            for newIndex in newIndexes.reversed() {
                 let brick = sourceBricks[newIndex]
                 let generatorBrick = GeneratorBrick()
                 generatorBrick.brick = brick
@@ -447,7 +447,7 @@ extension GeneratorViewController: NSTableViewDataSource {
                     realm.add(generatorBrick)
                     generator.generatorBricks.insert(generatorBrick, atIndex: row)
                 }
-                tableView.insertRowsAtIndexes(NSIndexSet(index: row), withAnimation: .EffectFade)
+                tableView.insertRows(at: IndexSet(integer: row), withAnimation: .effectFade)
             }
             tableView.endUpdates()
         
@@ -460,7 +460,7 @@ extension GeneratorViewController: NSTableViewDataSource {
 // MARK: - NSComboBoxDelegate
 
 extension GeneratorViewController: NSComboBoxDelegate {
-    func comboBoxSelectionDidChange(notification: NSNotification) {
+    func comboBoxSelectionDidChange(_ notification: Notification) {
         if let cb = notification.object as? NSComboBox{
             if cb.isEqual(headerSeparatorComboBox) && isReloading == false {
                 var separator: Separator? = nil
@@ -484,7 +484,7 @@ extension GeneratorViewController: NSComboBoxDelegate {
                     self.currentGenerator().footerSeparator = separator
                 }
             } else {
-                let index = bricksDestinationTableView.rowForView(cb)
+                let index = bricksDestinationTableView.row(for: cb)
                 if index >= 0 && index < currentGenerator().generatorBricks.count {
                     let generatorBrick = currentGenerator().generatorBricks[index]
                     var separator: Separator? = nil

@@ -35,7 +35,7 @@ class BricksViewController: NSViewController {
         return nil
     }
     
-    func updateDetailInfo(data: Brick?) {
+    func updateDetailInfo(_ data: Brick?) {
         var title = ""
         var text = ""
         if let brick = data {
@@ -46,10 +46,10 @@ class BricksViewController: NSViewController {
         self.textView.string = text
     }
     
-    func reloadBrickRow(row: Int) {
-        let indexSet = NSIndexSet(index: row)
-        let columnSet = NSIndexSet(index: 0)
-        self.tableView.reloadDataForRowIndexes(indexSet, columnIndexes: columnSet)
+    func reloadBrickRow(_ row: Int) {
+        let indexSet = IndexSet(integer: row)
+        let columnSet = IndexSet(integer: 0)
+        self.tableView.reloadData(forRowIndexes: indexSet, columnIndexes: columnSet)
     }
     
 }
@@ -58,10 +58,10 @@ class BricksViewController: NSViewController {
 extension BricksViewController{
    
     func sendAddDeleteNotification(){
-        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "AddDelete", object: nil))
+        NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: "AddDelete"), object: nil))
     }
     
-    @IBAction func search(sender: AnyObject) {
+    @IBAction func search(_ sender: AnyObject) {
         let searchField = sender as! NSSearchField
         tableView.deselectRow(tableView.selectedRow)
         if searchField.stringValue.isEmpty {
@@ -74,7 +74,7 @@ extension BricksViewController{
         
     }
     
-    @IBAction func saveButtonPressed(sender: AnyObject) {
+    @IBAction func saveButtonPressed(_ sender: AnyObject) {
         if let selectedData = selectedBrick() {
             let selectedRow = bricks.indexOf(selectedData)
             let realm = try! Realm()
@@ -89,7 +89,7 @@ extension BricksViewController{
         sendAddDeleteNotification()
     }
     
-    @IBAction func addButtonPressed(sender: AnyObject){
+    @IBAction func addButtonPressed(_ sender: AnyObject){
         let newData = Brick(value: ["title": "New Entry", "text": ""])
         let realm = try! Realm()
         try! realm.write{
@@ -103,7 +103,7 @@ extension BricksViewController{
         sendAddDeleteNotification()
     }
     
-    @IBAction func removeButtonPressed(sender: AnyObject){
+    @IBAction func removeButtonPressed(_ sender: AnyObject){
         if let selectedBrick = selectedBrick() {
             let realm = try! Realm()
             let generatorBricks = realm.objects(GeneratorBrick).filter("brick = %a", selectedBrick)
@@ -124,13 +124,13 @@ extension BricksViewController{
 
 // MARK: - NSTableViewDataSource
 extension BricksViewController: NSTableViewDataSource {
-    func numberOfRowsInTableView(aTableView: NSTableView) -> Int {
+    func numberOfRows(in aTableView: NSTableView) -> Int {
         return Int(self.bricks.count)
     }
     
-    func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         
-        let cellView: NSTableCellView = tableView.makeViewWithIdentifier(tableColumn!.identifier, owner: self) as! NSTableCellView
+        let cellView: NSTableCellView = tableView.make(withIdentifier: tableColumn!.identifier, owner: self) as! NSTableCellView
             
         let Brick = self.bricks[row]
         cellView.textField!.stringValue = Brick.title
@@ -142,9 +142,9 @@ extension BricksViewController: NSTableViewDataSource {
     // MARK: - NSTableViewDelegate
 extension BricksViewController: NSTableViewDelegate {
     
-    @IBAction func endEditingText(sender: AnyObject){
+    @IBAction func endEditingText(_ sender: AnyObject){
         let textField = sender as! NSTextField
-        let index = tableView.rowForView(textField)
+        let index = tableView.row(for: textField)
         if index >= 0 {
             let brick = bricks[index]
             try! Realm().write{
@@ -160,15 +160,15 @@ extension BricksViewController: NSTableViewDelegate {
         }
     }
 
-    func tableViewSelectionDidChange(notification: NSNotification) {
+    func tableViewSelectionDidChange(_ notification: Notification) {
         let selectedData = selectedBrick()
         updateDetailInfo(selectedData)
         let buttonsEnabled = (selectedData != nil)
-        textField.enabled = buttonsEnabled
-        textView.editable = buttonsEnabled
-        textView.selectable = buttonsEnabled
-        deleteButton.enabled = buttonsEnabled
-        saveButton.enabled = buttonsEnabled
+        textField.isEnabled = buttonsEnabled
+        textView.isEditable = buttonsEnabled
+        textView.isSelectable = buttonsEnabled
+        deleteButton.isEnabled = buttonsEnabled
+        saveButton.isEnabled = buttonsEnabled
     }
 }
 

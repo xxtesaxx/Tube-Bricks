@@ -10,25 +10,25 @@ import Cocoa
 
 class TBTextView: NSTextView {
 
-    override func drawRect(dirtyRect: NSRect) {
-        super.drawRect(dirtyRect)
+    override func draw(_ dirtyRect: NSRect) {
+        super.draw(dirtyRect)
 
         // Drawing code here.
     }
     
-    override func paste(sender: AnyObject?) {
-        let pb = NSPasteboard.generalPasteboard()
-        if let items  = pb.readObjectsForClasses([NSClassFromString(NSAttributedString.className())!, NSClassFromString(NSString.className())!], options: nil) {
+    override func paste(_ sender: Any?) {
+        let pb = NSPasteboard.general()
+        if let items  = pb.readObjects(forClasses: [NSClassFromString(NSAttributedString.className())!, NSClassFromString(NSString.className())!], options: nil) {
             if let item = items.last {
-                if item.isKindOfClass(NSClassFromString(NSAttributedString.className())!){
+                if (item as AnyObject).isKind(of: NSClassFromString(NSAttributedString.className())!){
                     if let string = item as? NSAttributedString {
                         let mutableString = string.mutableCopy() as! NSMutableAttributedString
                         var offset = 0
-                        string.enumerateAttribute(NSLinkAttributeName, inRange: NSMakeRange(0, string.length), options: .LongestEffectiveRangeNotRequired, usingBlock: { attribute, range, stop -> Void in
+                        string.enumerateAttribute(NSLinkAttributeName, in: NSMakeRange(0, string.length), options: .longestEffectiveRangeNotRequired, using: { attribute, range, stop -> Void in
                             if attribute != nil {
-                                if let url = attribute as? NSURL {
-                                    mutableString.replaceCharactersInRange(NSMakeRange(range.location + offset, range.length), withAttributedString: NSAttributedString(string: url.absoluteString))
-                                    offset += url.absoluteString.characters.count - string.attributedSubstringFromRange(range).string.characters.count
+                                if let url = attribute as? URL {
+                                    mutableString.replaceCharacters(in: NSMakeRange(range.location + offset, range.length), with: NSAttributedString(string: url.absoluteString))
+                                    offset += url.absoluteString.characters.count - string.attributedSubstring(from: range).string.characters.count
                                     
                                 }
                             }
